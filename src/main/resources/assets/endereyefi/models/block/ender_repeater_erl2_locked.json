@@ -1,0 +1,10 @@
+{
+  "parent": "endereyefi:block/ender_repeater_eel2_locked",
+  "textures": {
+    "particle": "endereyefi:blocks/repeater_off",
+    "slab": "blocks/stone_slab_top",
+    "top": "endereyefi:blocks/repeater_off",
+    "in": "blocks/bedrock",
+    "out": "blocks/redstone_torch_off"
+  }
+}

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "endereyefi",
+  "name": "Ender Eye-Fi",
+  "description": "Ender powered redstone for unobstructed redstone signals!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/RainAng/MC-Ender-Eye-Fi",
+  "updateUrl": "",
+  "authorList": ["RainAng"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

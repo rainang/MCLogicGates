@@ -1,0 +1,26 @@
+tile.ender_repeater_ees_on.name=EE Repeater (On)
+tile.ender_repeater_ees.name=EE Repeater
+tile.ender_repeater_res_on.name=RE Repeater (On)
+tile.ender_repeater_res.name=RE Repeater
+tile.ender_repeater_ers_on.name=ER Repeater (On)
+tile.ender_repeater_ers.name=ER Repeater
+tile.ender_repeater_rrs_on.name=RR Repeater (On)
+tile.ender_repeater_rrs.name=RR Repeater
+
+tile.ender_repeater_eel_on.name=EE Repeater (On)(Left)
+tile.ender_repeater_eel.name=EE Repeater (Left)
+tile.ender_repeater_rel_on.name=RE Repeater (On)(Left)
+tile.ender_repeater_rel.name=RE Repeater (Left)
+tile.ender_repeater_erl_on.name=ER Repeater (On)(Left)
+tile.ender_repeater_erl.name=ER Repeater (Left)
+tile.ender_repeater_rrl_on.name=RR Repeater (On)(Left)
+tile.ender_repeater_rrl.name=RR Repeater (Left)
+
+tile.ender_repeater_eer_on.name=EE Repeater (On)(Right)
+tile.ender_repeater_eer.name=EE Repeater (Right)
+tile.ender_repeater_rer_on.name=RE Repeater (On)(Right)
+tile.ender_repeater_rer.name=RE Repeater (Right)
+tile.ender_repeater_err_on.name=ER Repeater (On)(Right)
+tile.ender_repeater_err.name=ER Repeater (Right)
+tile.ender_repeater_rrr_on.name=RR Repeater (On)(Right)
+tile.ender_repeater_rrr.name=RR Repeater (Right)
