@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EnderEyeFi {
 
 	public static final String MODID   = "endereyefi";
-	public static final String VERSION = "0.3.2";
+	public static final String VERSION = "0.3.3";
 
 	protected static final BlockRepeater[][][] REPEATERS = new BlockRepeater[2][4][3];
 
