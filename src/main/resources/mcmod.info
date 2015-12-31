@@ -5,7 +5,7 @@
   "description": "Ender powered redstone for unobstructed redstone signals!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/RainAng/MC-Ender-Eye-Fi",
+  "url": "https://github.com/RainAng/MCEnderEyeFi",
   "updateUrl": "",
   "authorList": ["RainAng"],
   "credits": "",

@@ -1,6 +1,5 @@
 package com.github.rainang.endereyefi;
 
-import java.util.EnumSet;
 import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneRepeater;
@@ -14,7 +13,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -54,8 +52,55 @@ public class BlockEnderRepeater extends BlockRedstoneRepeater {
 	}
 
 	@Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+		if(calculateInputStrength(worldIn, pos, state) > 0)
+			worldIn.setBlockState(pos, getPoweredState(state));
+		notifyNeighbors(worldIn, pos, state);
+	}
+
+	@Override
+	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+		if(canBlockStay(worldIn, pos))
+			updateState(worldIn, pos, state);
+		else {
+			dropBlockAsItem(worldIn, pos, state, 0);
+			worldIn.setBlockToAir(pos);
+			notifyNeighbors(worldIn, pos, state);
+		}
+	}
+
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		if(isRepeaterPowered)
+			notifyNeighbors(worldIn, pos, state);
+		super.breakBlock(worldIn, pos, state);
+	}
+
+	@Override
 	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
-		return isRepeaterPowered && !isEnderTransmitter() && side == getOutputSide(state).getOpposite() ? 15 : 0;
+		return isRepeaterPowered && !isEnderTransmitter() && side.getOpposite() == getOutputSide(state) ? 15 : 0;
+	}
+
+	@Override
+	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
+		if(isEnderTransmitter())
+			for(EnumFacing facing : EnumFacing.HORIZONTALS)
+				for(int i = 0; i < 16; i++) {
+					BlockPos offset = pos.offset(facing, i + 1);
+					IBlockState offsetState = worldIn.getBlockState(offset);
+					if(isEnderRepeaterBlockID(offsetState.getBlock()) &&
+							((BlockEnderRepeater)offsetState.getBlock()).isEnderReceiver()) {
+						worldIn.notifyBlockOfStateChange(offset, this);
+						worldIn.notifyNeighborsOfStateChange(offset, this);
+						break;
+					}
+				}
+		else {
+			EnumFacing facing = getOutputSide(state);
+			BlockPos output = pos.offset(facing);
+			worldIn.notifyBlockOfStateChange(output, this);
+			worldIn.notifyNeighborsOfStateExcept(output, this, facing.getOpposite());
+		}
 	}
 
 	@Override
@@ -79,24 +124,6 @@ public class BlockEnderRepeater extends BlockRedstoneRepeater {
 	@Override
 	protected boolean canPowerSide(Block blockIn) {
 		return (isRedstoneRepeaterBlockID(blockIn) && type%2 == 0) || (isEnderRepeaterBlockID(blockIn) && type%2 == 1);
-	}
-
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		if(isRepeaterPowered)
-			notifyAll(worldIn, pos);
-		super.breakBlock(worldIn, pos, state);
-	}
-
-	@Override
-	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
-		if(canBlockStay(worldIn, pos))
-			updateState(worldIn, pos, state);
-		else {
-			dropBlockAsItem(worldIn, pos, state, 0);
-			worldIn.setBlockToAir(pos);
-			notifyAll(worldIn, pos);
-		}
 	}
 
 	@Override
@@ -183,36 +210,6 @@ public class BlockEnderRepeater extends BlockRedstoneRepeater {
 			double d4 = (double)(f*(float)enumfacing.getFrontOffsetZ());
 			worldIn.spawnParticle(particle, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
 		}
-	}
-
-	protected void notifyNearestEnderRepeaters(World worldIn, BlockPos pos) {
-		for(EnumFacing facing : EnumFacing.HORIZONTALS)
-			for(int i = 0; i < 16; i++) {
-				BlockPos offset = pos.offset(facing, i + 1);
-				IBlockState offState = worldIn.getBlockState(offset);
-				if(isEnderRepeaterBlockID(offState.getBlock())) {
-					worldIn.notifyBlockOfStateChange(offset, this);
-					break;
-				}
-			}
-	}
-
-	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-		BlockPos blockpos1 = pos.offset(enumfacing.getOpposite());
-		if(ForgeEventFactory
-				.onNeighborNotify(worldIn, pos, worldIn.getBlockState(pos), EnumSet.of(enumfacing.getOpposite()))
-				.isCanceled())
-			return;
-		notifyNearestEnderRepeaters(worldIn, pos);
-		worldIn.notifyBlockOfStateChange(blockpos1, this);
-		worldIn.notifyNeighborsOfStateExcept(blockpos1, this, enumfacing);
-	}
-
-	protected void notifyAll(World worldIn, BlockPos pos) {
-		notifyNearestEnderRepeaters(worldIn, pos);
-		for(EnumFacing enumfacing : EnumFacing.values())
-			worldIn.notifyNeighborsOfStateChange(pos.offset(enumfacing), this);
 	}
 
 	public EnumFacing getOutputSide(IBlockState state) {
