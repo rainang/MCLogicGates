@@ -94,12 +94,10 @@ public class BlockRepeater extends BlockRedstoneRepeater {
 						break;
 					}
 				}
-		else {
-			EnumFacing facing = getOutputSide(state);
-			BlockPos output = pos.offset(facing);
-			worldIn.notifyBlockOfStateChange(output, this);
-			worldIn.notifyNeighborsOfStateExcept(output, this, facing.getOpposite());
-		}
+		EnumFacing facing = getOutputSide(state);
+		BlockPos output = pos.offset(facing);
+		worldIn.notifyBlockOfStateChange(output, this);
+		worldIn.notifyNeighborsOfStateExcept(output, this, facing.getOpposite());
 	}
 
 	@Override
