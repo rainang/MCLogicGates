@@ -82,7 +82,7 @@ public class BlockRepeater extends BlockRedstoneRepeater {
 
 	@Override
 	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
-		if(isEnderTransmitter())
+		if(isEnderTransmitter() || isEnderReceiver())
 			for(EnumFacing facing : EnumFacing.HORIZONTALS)
 				for(int i = 0; i < 16; i++) {
 					BlockPos offset = pos.offset(facing, i + 1);
@@ -179,21 +179,21 @@ public class BlockRepeater extends BlockRedstoneRepeater {
 			}
 			return super.calculateInputStrength(worldIn, pos, state);
 		} else {
-			int power = 0;
 			for(int i = 0; i < 16; i++) {
 				BlockPos offset = pos.offset(facing, i + 1);
 				IBlockState inputState = worldIn.getBlockState(offset);
 				if(inputState.getBlock() instanceof BlockRepeater) {
 					BlockRepeater input = (BlockRepeater)inputState.getBlock();
-					if(input.isEnderTransmitter() && input.getOutputSide(inputState) == facing.getOpposite()) {
-						if(input.isRepeaterPowered)
-							power = 15;
+					if(input.getOutputSide(inputState) == facing.getOpposite()) {
+						if(input.isEnderTransmitter() && input.isRepeaterPowered)
+							return 15;
+					} else if(input.isEnderReceiver()) {
 						break;
 					}
 				}
 			}
-			return power;
 		}
+		return 0;
 	}
 
 	@Override
