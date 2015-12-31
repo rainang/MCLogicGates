@@ -22,9 +22,9 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EnderEyeFi {
 
 	public static final String MODID   = "endereyefi";
-	public static final String VERSION = "0.2.0";
+	public static final String VERSION = "0.3.0";
 
-	protected static final BlockEnderRepeater[][][] REPEATERS = new BlockEnderRepeater[2][4][3];
+	protected static final BlockRepeater[][][] REPEATERS = new BlockRepeater[2][4][3];
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
@@ -34,15 +34,15 @@ public class EnderEyeFi {
 		for(int p = 0; p < 2; p++)
 			for(int t = 0; t < 4; t++)
 				for(int o = 0; o < 3; o++) {
-					REPEATERS[p][t][o] = new BlockEnderRepeater(p == 1, t, o);
+					REPEATERS[p][t][o] = new BlockRepeater(p == 1, t, o);
 					registerBlock(REPEATERS[p][t][o], b);
 				}
 
 		GameRegistry.addShapedRecipe(new ItemStack(getRepeater(0, 3, 1), 1), "prp", "sss", 'p', Items.ender_pearl, 'r',
 									 Items.redstone, 's', Blocks.stone);
 		GameRegistry
-				.addShapedRecipe(new ItemStack(getRepeater(0, 1, 1), 1), "abc", "sss", 'a', Blocks.redstone_torch, 'b',
-								 Items.redstone, 'c', Items.ender_pearl, 's', Blocks.stone);
+				.addShapedRecipe(new ItemStack(getRepeater(0, 1, 1), 1), "trp", "sss", 't', Blocks.redstone_torch, 'r',
+								 Items.redstone, 'p', Items.ender_pearl, 's', Blocks.stone);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(getRepeater(0, 1, 1), 1), getRepeater(0, 2, 1));
 		GameRegistry.addShapelessRecipe(new ItemStack(getRepeater(0, 2, 1), 1), getRepeater(0, 1, 1));
@@ -77,7 +77,7 @@ public class EnderEyeFi {
 		}
 	}
 
-	public static BlockEnderRepeater getRepeater(int on, int type, int out) {
+	public static BlockRepeater getRepeater(int on, int type, int out) {
 		return REPEATERS[on][type][out];
 	}
 }
