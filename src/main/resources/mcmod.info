@@ -5,11 +5,11 @@
   "description": "Ender powered redstone for unobstructed redstone signals!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/RainAng/MCEnderEyeFi",
+  "url": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2588839-ender-eye-fi",
   "updateUrl": "",
   "authorList": ["RainAng"],
   "credits": "",
-  "logoFile": "",
+  "logoFile": "endereyefilogo.gif",
   "screenshots": [],
   "dependencies": []
 }

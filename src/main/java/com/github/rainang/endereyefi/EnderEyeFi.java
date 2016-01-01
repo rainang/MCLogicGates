@@ -2,6 +2,7 @@ package com.github.rainang.endereyefi;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -9,6 +10,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EnderEyeFi {
 
 	public static final String MODID   = "endereyefi";
-	public static final String VERSION = "0.3.3";
+	public static final String VERSION = "0.4.0";
 
 	protected static final BlockRepeater[][][] REPEATERS = new BlockRepeater[2][4][3];
 
@@ -38,12 +41,21 @@ public class EnderEyeFi {
 					registerBlock(REPEATERS[p][t][o], b);
 				}
 
-		GameRegistry.addShapedRecipe(new ItemStack(getRepeater(0, 3, 1), 1), "prp", "sss", 'p', Items.ender_pearl, 'r',
-									 Items.redstone, 's', Blocks.stone);
-		GameRegistry
-				.addShapedRecipe(new ItemStack(getRepeater(0, 1, 1), 1), "trp", "sss", 't', Blocks.redstone_torch, 'r',
-								 Items.redstone, 'p', Items.ender_pearl, 's', Blocks.stone);
+		for(Object o : CraftingManager.getInstance().getRecipeList())
+			if(ItemStack.areItemsEqual(new ItemStack(Items.repeater, 1), ((IRecipe)o).getRecipeOutput())) {
+				CraftingManager.getInstance().getRecipeList().remove(o);
+				break;
+			}
 
+		ItemStack stackStone = new ItemStack(Blocks.stone, 1, BlockStone.EnumType.STONE.getMetadata());
+		GameRegistry
+				.addShapedRecipe(new ItemStack(getRepeater(0, 0, 1), 1), "#X#", "III", '#', Blocks.redstone_torch, 'X',
+								 Items.redstone, 'I', stackStone);
+		GameRegistry.addShapedRecipe(new ItemStack(getRepeater(0, 3, 1), 1), "#X#", "III", '#', Items.ender_pearl, 'X',
+									 Items.redstone, 'I', stackStone);
+		GameRegistry
+				.addShapedRecipe(new ItemStack(getRepeater(0, 2, 1), 1), "RX#", "III", 'R', Blocks.redstone_torch, 'X',
+								 Items.redstone, '#', Items.ender_pearl, 'I', stackStone);
 		GameRegistry.addShapelessRecipe(new ItemStack(getRepeater(0, 1, 1), 1), getRepeater(0, 2, 1));
 		GameRegistry.addShapelessRecipe(new ItemStack(getRepeater(0, 2, 1), 1), getRepeater(0, 1, 1));
 	}
