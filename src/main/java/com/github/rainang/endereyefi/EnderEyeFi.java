@@ -70,6 +70,8 @@ public class EnderEyeFi {
 		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[3][0][0], 6), "#X#", "#E#", "#Y#", 'E',
 									 Items.ender_eye, '#', Blocks.obsidian, 'X', Items.ender_pearl, 'Y',
 									 Blocks.redstone_block);
+		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.enderCasterEye, 1), "#X#", "XEX", "#X#", 'E',
+									 Items.ender_eye, '#', Blocks.obsidian, 'X', Blocks.glass);
 	}
 
 	@SubscribeEvent

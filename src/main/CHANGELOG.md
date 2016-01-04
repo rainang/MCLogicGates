@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Caster block textures
 
 ## [0.5.0] - 2016-01-04
 ### Added
@@ -11,8 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Removed vanilla repeater from creative tabs.
 
 ### Changed
-- Renamed most assets file names
-- Rewrote block state and model files
+- Renamed most assets file names.
+- Rewrote block state and model files.
 
 ## [0.4.0] - 2016-01-02
 ### Added
