@@ -8,6 +8,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -200,5 +201,11 @@ public class BlockCaster extends BlockDiode {
 
 	public boolean isNormalCube(IBlockAccess world, BlockPos pos) {
 		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(isPowered)
+			Blocks.ender_chest.randomDisplayTick(worldIn, pos, state, rand);
 	}
 }
