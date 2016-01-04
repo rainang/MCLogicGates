@@ -3,9 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.5.0] - 2016-01-04
 ### Added
 - This change log.
 - Caster blocks.
+- Removed vanilla repeater from creative tabs.
 
 ### Changed
 - Renamed most assets file names

@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EnderEyeFi {
 
 	public static final String MODID   = "endereyefi";
-	public static final String VERSION = "0.4.0";
+	public static final String VERSION = "0.5.0";
 
 	protected static final CreativeTabs TAB_EYE = new CreativeTabs("ender") {
 		@Override
@@ -37,6 +37,7 @@ public class EnderEyeFi {
 		MinecraftForge.EVENT_BUS.register(this);
 		EnderBlocks.init(event.getSide() == Side.CLIENT);
 
+		Items.repeater.setCreativeTab(null);
 		for(Object o : CraftingManager.getInstance().getRecipeList())
 			if(ItemStack.areItemsEqual(new ItemStack(Items.repeater, 1), ((IRecipe)o).getRecipeOutput())) {
 				CraftingManager.getInstance().getRecipeList().remove(o);
