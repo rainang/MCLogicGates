@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "endereyefi:blocks/diode_base",
+    "down": "endereyefi:blocks/converter_passive",
+    "up": "endereyefi:blocks/caster_passive",
+    "north": "endereyefi:blocks/diode_base",
+    "south": "endereyefi:blocks/diode_base",
+    "west": "endereyefi:blocks/diode_base",
+    "east": "endereyefi:blocks/diode_base"
+  }
+}

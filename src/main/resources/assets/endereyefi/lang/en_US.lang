@@ -1,26 +1,42 @@
-tile.ee_repeater_s_on.name=EE Repeater (On)
-tile.ee_repeater_s.name=EE Repeater
-tile.re_repeater_s_on.name=RE Repeater (On)
-tile.re_repeater_s.name=RE Repeater
-tile.er_repeater_s_on.name=ER Repeater (On)
-tile.er_repeater_s.name=ER Repeater
-tile.rr_repeater_s_on.name=RR Repeater (On)
-tile.rr_repeater_s.name=RR Repeater
+tile.repeater_ee_on.name=EE Repeater (On)
+tile.repeater_ee.name=EE Repeater
+tile.repeater_eel_on.name=EE Repeater L (On)
+tile.repeater_eel.name=EE Repeater L
+tile.repeater_eer_on.name=EE Repeater R (On)
+tile.repeater_eer.name=EE Repeater R
 
-tile.ee_repeater_l_on.name=EE Repeater (On)(Left)
-tile.ee_repeater_l.name=EE Repeater (Left)
-tile.re_repeater_l_on.name=RE Repeater (On)(Left)
-tile.re_repeater_l.name=RE Repeater (Left)
-tile.er_repeater_l_on.name=ER Repeater (On)(Left)
-tile.er_repeater_l.name=ER Repeater (Left)
-tile.rr_repeater_l_on.name=RR Repeater (On)(Left)
-tile.rr_repeater_l.name=RR Repeater (Left)
+tile.repeater_re_on.name=RE Repeater (On)
+tile.repeater_re.name=RE Repeater
+tile.repeater_rel_on.name=RE Repeater L (On)
+tile.repeater_rel.name=RE Repeater L
+tile.repeater_rer_on.name=RE Repeater R (On)
+tile.repeater_rer.name=RE Repeater R
 
-tile.ee_repeater_r_on.name=EE Repeater (On)(Right)
-tile.ee_repeater_r.name=EE Repeater (Right)
-tile.re_repeater_r_on.name=RE Repeater (On)(Right)
-tile.re_repeater_r.name=RE Repeater (Right)
-tile.er_repeater_r_on.name=ER Repeater (On)(Right)
-tile.er_repeater_r.name=ER Repeater (Right)
-tile.rr_repeater_r_on.name=RR Repeater (On)(Right)
-tile.rr_repeater_r.name=RR Repeater (Right)
+tile.repeater_er_on.name=ER Repeater (On)
+tile.repeater_er.name=ER Repeater
+tile.repeater_erl_on.name=ER Repeater L (On)
+tile.repeater_erl.name=ER Repeater L
+tile.repeater_err_on.name=ER Repeater R (On)
+tile.repeater_err.name=ER Repeater R
+
+tile.repeater_rr_on.name=RR Repeater (On)
+tile.repeater_rr.name=RR Repeater
+tile.repeater_rrl_on.name=RR Repeater L (On)
+tile.repeater_rrl.name=RR Repeater L
+tile.repeater_rrr_on.name=RR Repeater R (On)
+tile.repeater_rrr.name=RR Repeater R
+
+tile.diode.name=Diode
+
+tile.caster_eye.name=Caster Eye
+
+tile.caster_ee.name=EE Caster
+tile.caster_ee_active.name=EE Caster (On)
+
+tile.caster_re.name=RE Caster
+tile.caster_re_active.name=RE Caster (On)
+
+tile.caster_er.name=ER Caster
+tile.caster_er_active.name=ER Caster (On)
+
+itemGroup.ender=Ender Eye-Fi

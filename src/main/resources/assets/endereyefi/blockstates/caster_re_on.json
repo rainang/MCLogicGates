@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "in=up,out=up": {
+      "model": "endereyefi:caster_re_13"
+    },
+    "in=south,out=south": {
+      "model": "endereyefi:caster_re_13"
+    },
+    "in=east,out=east": {
+      "model": "endereyefi:caster_re_13"
+    },
+    "in=up,out=down": {
+      "model": "endereyefi:caster_re_on_1"
+    },
+    "in=up,out=north": {
+      "model": "endereyefi:caster_re_on_2"
+    },
+    "in=up,out=south": {
+      "model": "endereyefi:caster_re_on_3"
+    },
+    "in=up,out=west": {
+      "model": "endereyefi:caster_re_on_4"
+    },
+    "in=up,out=east": {
+      "model": "endereyefi:caster_re_on_5"
+    },
+    "in=south,out=down": {
+      "model": "endereyefi:caster_re_on_6"
+    },
+    "in=south,out=up": {
+      "model": "endereyefi:caster_re_on_7"
+    },
+    "in=south,out=north": {
+      "model": "endereyefi:caster_re_on_8"
+    },
+    "in=south,out=west": {
+      "model": "endereyefi:caster_re_on_9"
+    },
+    "in=south,out=east": {
+      "model": "endereyefi:caster_re_on_10"
+    },
+    "in=east,out=down": {
+      "model": "endereyefi:caster_re_on_11"
+    },
+    "in=east,out=up": {
+      "model": "endereyefi:caster_re_on_12"
+    },
+    "in=east,out=north": {
+      "model": "endereyefi:caster_re_on_13"
+    },
+    "in=east,out=south": {
+      "model": "endereyefi:caster_re_on_14"
+    },
+    "in=east,out=west": {
+      "model": "endereyefi:caster_re_on_15"
+    }
+  }
+}

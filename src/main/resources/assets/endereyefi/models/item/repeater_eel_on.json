@@ -1,0 +1,6 @@
+{
+  "parent": "item/repeater",
+  "textures": {
+    "layer0": "endereyefi:items/repeater_ee"
+  }
+}
