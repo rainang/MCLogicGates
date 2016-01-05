@@ -174,7 +174,7 @@ public class BlockCaster extends BlockDiode {
 	}
 
 	@Override
-	protected int getDelay(IBlockState state) {
+	protected int getTickDelay(IBlockState state) {
 		return 0;
 	}
 

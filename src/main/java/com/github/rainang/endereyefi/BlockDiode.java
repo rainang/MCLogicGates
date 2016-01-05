@@ -64,7 +64,7 @@ public abstract class BlockDiode extends Block {
 				b0 = -3;
 			else if(isPowered)
 				b0 = -2;
-			worldIn.updateBlockTick(pos, this, getDelay(state), b0);
+			worldIn.updateBlockTick(pos, this, getTickDelay(state), b0);
 		}
 	}
 
@@ -73,42 +73,47 @@ public abstract class BlockDiode extends Block {
 	}
 
 	protected int calculateInputStrength(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing inputSide = getInputSide(state);
-
-		if(!isEnderReceiver()) {
-			IBlockState inputState = worldIn.getBlockState(pos.offset(inputSide));
-			Block inputBLock = inputState.getBlock();
-			if(inputBLock instanceof BlockDiode) {
-				BlockDiode input = (BlockDiode)inputBLock;
-				return !input.isEnderTransmitter() && input.getOutputSide(inputState) == inputSide.getOpposite() &&
-							   input.isPowered ? 15 : 0;
-			} else { // do vanilla calculation
-				BlockPos blockpos1 = pos.offset(inputSide);
-				int i = worldIn.getRedstonePower(blockpos1, inputSide);
-				if(i >= 15)
-					return i;
+		EnumFacing side = getInputSide(state);
+		for(int i = 0; i < 16; i++) {
+			IBlockState inputState = worldIn.getBlockState(pos.offset(side, i + 1));
+			BlockDiode inputBlock = getAsDiode(inputState);
+			boolean flag = false;
+			if(inputBlock != null) {
+				flag = inputBlock.isEnderReceiver();
+				if(inputBlock.isPowered && isTypeCompatible(inputBlock) && isIOCompatible(inputState, state))
+					return 15;
+			} else if(i == 0) { // do vanilla calculation
+				BlockPos blockpos1 = pos.offset(side);
+				int power = worldIn.getRedstonePower(blockpos1, side);
+				if(power >= 15)
+					return power;
 				else {
 					IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
-					return Math.max(i, iblockstate1.getBlock() == Blocks.redstone_wire ? (Integer)iblockstate1
+					power = Math.max(power, iblockstate1.getBlock() == Blocks.redstone_wire ? (Integer)iblockstate1
 							.getValue(BlockRedstoneWire.POWER) : 0);
+					if(power > 0)
+						return power;
 				}
 			}
-		} else {
-			for(int i = 0; i < 16; i++) {
-				BlockPos offset = pos.offset(inputSide, i + 1);
-				IBlockState inputState = worldIn.getBlockState(offset);
-				if(inputState.getBlock() instanceof BlockDiode) {
-					BlockDiode input = (BlockDiode)inputState.getBlock();
-					if(input.getOutputSide(inputState) == inputSide.getOpposite()) {
-						if(input.isEnderTransmitter() && input.isPowered)
-							return 15;
-					} else if(input.isEnderReceiver())
-						break;
-				} else if(inputState.getBlock() instanceof BlockCasterEye)
-					return 15;
-			}
+			if(flag)
+				break;
 		}
 		return 0;
+	}
+
+	protected boolean isIOCompatible(IBlockState transmitter, IBlockState receiver) {
+		BlockDiode dTransmitter = getAsDiode(transmitter);
+		BlockDiode dReceiver = getAsDiode(receiver);
+		return dTransmitter != null && dReceiver != null &&
+				dTransmitter.getOutputSide(transmitter) == dReceiver.getInputSide(receiver).getOpposite();
+	}
+
+	protected boolean isTypeCompatible(BlockDiode block) {
+		return block.isEnderTransmitter() == isEnderReceiver();
+	}
+
+	protected BlockDiode getAsDiode(IBlockState state) {
+		return state.getBlock() instanceof BlockDiode ? (BlockDiode)state.getBlock() : null;
 	}
 
 	public boolean isEnderTransmitter() {
@@ -173,11 +178,7 @@ public abstract class BlockDiode extends Block {
 				worldIn.getBlockState(blockpos1).getValue(BlockDirectional.FACING) != output;
 	}
 
-	protected int getTickDelay(IBlockState state) {
-		return getDelay(state);
-	}
-
-	protected abstract int getDelay(IBlockState state);
+	protected abstract int getTickDelay(IBlockState state);
 
 	protected abstract IBlockState getPoweredState(IBlockState unpoweredState);
 

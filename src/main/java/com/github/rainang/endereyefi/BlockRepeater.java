@@ -164,9 +164,9 @@ public class BlockRepeater extends BlockDiode {
 			double d2 = (double)((float)pos.getZ() + 0.5F) + (double)(rand.nextFloat() - 0.5F)*0.2D;
 			float f = -5.0F;
 
-			EnumParticleTypes particle = type < 2 ? EnumParticleTypes.REDSTONE : EnumParticleTypes.PORTAL;
+			EnumParticleTypes particle = isEnderTransmitter() ? EnumParticleTypes.PORTAL : EnumParticleTypes.REDSTONE;
 			if(rand.nextBoolean()) {
-				particle = type%2 == 0 ? EnumParticleTypes.REDSTONE : EnumParticleTypes.PORTAL;
+				particle = isEnderReceiver() ? EnumParticleTypes.PORTAL : EnumParticleTypes.REDSTONE;
 				f = (float)((Integer)state.getValue(DELAY)*2 - 1);
 			}
 
@@ -214,7 +214,7 @@ public class BlockRepeater extends BlockDiode {
 		return state.withProperty(LOCKED, isLocked(worldIn, pos, state));
 	}
 
-	protected int getDelay(IBlockState state) {
+	protected int getTickDelay(IBlockState state) {
 		return (Integer)state.getValue(DELAY)*2;
 	}
 
