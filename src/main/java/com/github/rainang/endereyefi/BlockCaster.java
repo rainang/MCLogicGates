@@ -3,6 +3,7 @@ package com.github.rainang.endereyefi;
 import com.google.common.base.Predicate;
 import java.util.Random;
 import javax.annotation.Nullable;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -38,7 +39,7 @@ public class BlockCaster extends BlockDiode {
 	protected final int type;
 
 	public BlockCaster(int type, boolean isPowered) {
-		super(isPowered);
+		super(Material.ground, isPowered);
 		this.type = type;
 		boolean neg = isNegative();
 
@@ -46,8 +47,9 @@ public class BlockCaster extends BlockDiode {
 			setCreativeTab(EnderEyeFi.TAB_EYE);
 		setLightLevel(isPowered ? 0.25f : 0);
 		EnumFacing facing = neg ? EnumFacing.DOWN : EnumFacing.UP;
-		setDefaultState(getBlockState().getBaseState().withProperty(getInProperty(), facing)
-									   .withProperty(OUT, facing.getOpposite()));
+		setDefaultState(getBlockState().getBaseState()
+				.withProperty(getInProperty(), facing)
+				.withProperty(OUT, facing.getOpposite()));
 		setHardness(0.25F).setResistance(10.0F);
 
 		String name = "";
@@ -59,48 +61,16 @@ public class BlockCaster extends BlockDiode {
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1, 1, 1);
 	}
 
-	@Override
-	public boolean onBlockActivated(
-			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
-			float hitY, float hitZ) {
-		if(!playerIn.capabilities.allowEdit)
-			return false;
-		else if(playerIn.isSneaking()) {
-			BlockCaster b = getInProperty().getAllowedValues().contains(side) ? this : getNegative();
-			IBlockState bs = b.getDefaultState().withProperty(b.getInProperty(), side)
-							  .withProperty(OUT, state.getValue(OUT));
-			if(b.shouldBePowered(worldIn, pos, bs) != isPowered)
-				bs = EnderBlocks.getEnderDiode(type, b.isNegative(), !isPowered).getDefaultState()
-								.withProperty(b.getInProperty(), side).withProperty(OUT, state.getValue(OUT));
-			worldIn.setBlockState(pos, bs);
-		} else
-			worldIn.setBlockState(pos, state.withProperty(OUT, side));
-		notifyNeighbors(worldIn, pos, state);
-		return true;
-	}
+	public static class BlockCasterNeg extends BlockCaster {
 
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(EnderBlocks.getEnderDiode(type, false, false));
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Item getItem(World worldIn, BlockPos pos) {
-		return Item.getItemFromBlock(EnderBlocks.getEnderDiode(type, false, false));
-	}
-
-	public IBlockState onBlockPlaced(
-			World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
-			EntityLivingBase placer) {
-		if(!placer.isSneaking())
-			facing = placer.getHorizontalFacing();
-		if(isOnThisAxisDirection(facing)) {
-			BlockCaster block = getNegative();
-			return block.getDefaultState().withProperty(block.getInProperty(), facing.getOpposite())
-						.withProperty(OUT, facing);
+		public BlockCasterNeg(int type, boolean isPowered) {
+			super(type, isPowered);
 		}
-		return getDefaultState().withProperty(getInProperty(), facing.getOpposite()).withProperty(OUT, facing);
+
+		@Override
+		public PropertyDirection getInProperty() {
+			return IN_NEG;
+		}
 	}
 
 	public boolean isOnThisAxisDirection(EnumFacing facing) {
@@ -111,12 +81,52 @@ public class BlockCaster extends BlockDiode {
 		return this instanceof BlockCasterNeg;
 	}
 
-	protected PropertyDirection getInProperty() {
+	public PropertyDirection getInProperty() {
 		return IN_POS;
 	}
 
 	public BlockCaster getNegative() {
 		return EnderBlocks.getEnderDiode(type, !(isNegative()), isPowered);
+	}
+
+	/* Block override */
+
+	@Override
+	public boolean onBlockActivated(
+			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
+			float hitY, float hitZ) {
+		if(!playerIn.capabilities.allowEdit)
+			return false;
+		else if(playerIn.isSneaking()) {
+			BlockCaster b = getInProperty().getAllowedValues().contains(side) ? this : getNegative();
+			IBlockState bs = b.getDefaultState()
+					.withProperty(b.getInProperty(), side)
+					.withProperty(OUT, state.getValue(OUT));
+			if(b.shouldBePowered(worldIn, pos, bs) != isPowered)
+				bs = EnderBlocks.getEnderDiode(type, b.isNegative(), !isPowered)
+						.getDefaultState()
+						.withProperty(b.getInProperty(), side)
+						.withProperty(OUT, state.getValue(OUT));
+			worldIn.setBlockState(pos, bs);
+		} else
+			worldIn.setBlockState(pos, state.withProperty(OUT, side));
+		notifyNeighbors(worldIn, pos, state);
+		return true;
+	}
+
+	@Override
+	public IBlockState onBlockPlaced(
+			World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
+			EntityLivingBase placer) {
+		if(!placer.isSneaking())
+			facing = placer.getHorizontalFacing();
+		if(isOnThisAxisDirection(facing)) {
+			BlockCaster block = getNegative();
+			return block.getDefaultState()
+					.withProperty(block.getInProperty(), facing.getOpposite())
+					.withProperty(OUT, facing);
+		}
+		return getDefaultState().withProperty(getInProperty(), facing.getOpposite()).withProperty(OUT, facing);
 	}
 
 	@Override
@@ -151,17 +161,32 @@ public class BlockCaster extends BlockDiode {
 	}
 
 	@Override
-	public IBlockState getPoweredState(IBlockState state) {
-		return EnderBlocks.getEnderDiode(type, isNegative(), true).getDefaultState()
-						  .withProperty(getInProperty(), state.getValue(getInProperty()))
-						  .withProperty(OUT, state.getValue(OUT));
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Item.getItemFromBlock(EnderBlocks.getEnderDiode(type, false, false));
 	}
 
 	@Override
-	public IBlockState getUnpoweredState(IBlockState state) {
-		return EnderBlocks.getEnderDiode(type, isNegative(), false).getDefaultState()
-						  .withProperty(getInProperty(), state.getValue(getInProperty()))
-						  .withProperty(OUT, state.getValue(OUT));
+	public boolean isNormalCube(IBlockAccess world, BlockPos pos) {
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Item getItem(World worldIn, BlockPos pos) {
+		return Item.getItemFromBlock(EnderBlocks.getEnderDiode(type, false, false));
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(isPowered)
+			Blocks.ender_chest.randomDisplayTick(worldIn, pos, state, rand);
+	}
+
+	/* BlockDiode impl */
+
+	@Override
+	public int getTickDelay(IBlockState state) {
+		return 0;
 	}
 
 	@Override
@@ -169,13 +194,25 @@ public class BlockCaster extends BlockDiode {
 		return type != 3;
 	}
 
+	@Override
 	public boolean isEnderReceiver() {
 		return type%2 == 1;
 	}
 
 	@Override
-	protected int getTickDelay(IBlockState state) {
-		return 0;
+	public IBlockState getPoweredState(IBlockState state) {
+		return EnderBlocks.getEnderDiode(type, isNegative(), true)
+				.getDefaultState()
+				.withProperty(getInProperty(), state.getValue(getInProperty()))
+				.withProperty(OUT, state.getValue(OUT));
+	}
+
+	@Override
+	public IBlockState getUnpoweredState(IBlockState state) {
+		return EnderBlocks.getEnderDiode(type, isNegative(), false)
+				.getDefaultState()
+				.withProperty(getInProperty(), state.getValue(getInProperty()))
+				.withProperty(OUT, state.getValue(OUT));
 	}
 
 	@Override
@@ -186,26 +223,5 @@ public class BlockCaster extends BlockDiode {
 	@Override
 	public EnumFacing getOutputSide(IBlockState state) {
 		return (EnumFacing)state.getValue(OUT);
-	}
-
-	public static class BlockCasterNeg extends BlockCaster {
-
-		public BlockCasterNeg(int type, boolean isPowered) {
-			super(type, isPowered);
-		}
-
-		protected PropertyDirection getInProperty() {
-			return IN_NEG;
-		}
-	}
-
-	public boolean isNormalCube(IBlockAccess world, BlockPos pos) {
-		return true;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if(isPowered)
-			Blocks.ender_chest.randomDisplayTick(worldIn, pos, state, rand);
 	}
 }
