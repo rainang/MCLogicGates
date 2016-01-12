@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0] - 2016-01-13
+### Added
+- Caster ER to RE recipe and vice versa
+
+### Fixed
+- Mod showing wrong version number
+- Caster reorienting to default state when attempting to change input or output to invalid side
+- Diode base texture
+
 ## [0.6.0] - 2016-01-12
 ### Added
 - Caster eye recipe

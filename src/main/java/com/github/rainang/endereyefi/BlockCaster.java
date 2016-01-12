@@ -96,6 +96,9 @@ public class BlockCaster extends BlockDiode {
 			float hitY, float hitZ) {
 		if(!playerIn.capabilities.allowEdit)
 			return false;
+		BlockDiode diode = (BlockDiode)state.getBlock();
+		if(diode.getInputSide(state) == side || diode.getOutputSide(state) == side)
+			return false;
 		else if(playerIn.isSneaking()) {
 			BlockCaster b = getInProperty().getAllowedValues().contains(side) ? this : getNegative();
 			IBlockState bs = b.getDefaultState()
