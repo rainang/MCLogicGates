@@ -57,8 +57,8 @@ public class EnderEyeFi {
 		GameRegistry.addShapelessRecipe(new ItemStack(EnderBlocks.REPEATERS[0][2][1], 1),
 				EnderBlocks.REPEATERS[0][1][1]);
 
-		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[0][0][0], 6), "#X#", "#E#", "#X#", 'E',
-				Items.ender_eye, '#', Blocks.obsidian, 'X', Blocks.glass);
+		//		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[0][0][0], 6), "#X#", "#E#", "#X#", 'E',
+		//				Items.ender_eye, '#', Blocks.obsidian, 'X', Blocks.glass);
 		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[1][0][0], 6), "#X#", "#E#", "#X#", 'E',
 				Items.ender_eye, '#', Blocks.obsidian, 'X', Items.ender_pearl);
 		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[2][0][0], 6), "#X#", "#E#", "#Y#", 'E',

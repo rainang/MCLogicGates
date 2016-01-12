@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.1] - 2016-01-13
+### Fixed
+- Disabled currently unused Diode recipe causing crash
+
 ## [0.7.0] - 2016-01-13
 ### Added
 - Caster ER to RE recipe and vice versa
