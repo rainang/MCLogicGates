@@ -1,5 +1,5 @@
 {
-  "parent": "endereyefi:block/diode_2",
+  "parent": "endereyefi:block/diode_corner",
   "display": {
     "thirdperson": {
       "rotation": [10, -45, 170],

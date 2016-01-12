@@ -28,15 +28,15 @@ tile.repeater_rrr.name=RR Repeater R
 
 tile.diode.name=Diode
 
-tile.caster_eye.name=Caster Eye
+tile.caster_eye.name=Signal Caster Eye
 
-tile.caster_ee.name=EE Caster
-tile.caster_ee_active.name=EE Caster (On)
+tile.caster_ee.name=EE Signal Caster
+tile.caster_ee_active.name=EE Signal Caster (On)
 
-tile.caster_re.name=RE Caster
-tile.caster_re_active.name=RE Caster (On)
+tile.caster_re.name=RE Signal Caster
+tile.caster_re_active.name=RE Signal Caster (On)
 
-tile.caster_er.name=ER Caster
-tile.caster_er_active.name=ER Caster (On)
+tile.caster_er.name=ER Signal Caster
+tile.caster_er_active.name=ER Signal Caster (On)
 
 itemGroup.ender=Ender Eye-Fi

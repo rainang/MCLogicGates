@@ -1,58 +1,58 @@
 {
   "variants": {
     "in=up,out=up": {
-      "model": "endereyefi:caster_ee_13"
+      "model": "endereyefi:caster_ee"
     },
     "in=south,out=south": {
-      "model": "endereyefi:caster_ee_13"
+      "model": "endereyefi:caster_ee"
     },
     "in=east,out=east": {
-      "model": "endereyefi:caster_ee_13"
+      "model": "endereyefi:caster_ee"
     },
     "in=up,out=down": {
-      "model": "endereyefi:caster_ee_1"
+      "model": "endereyefi:caster_ee", "x": 270
     },
     "in=up,out=north": {
-      "model": "endereyefi:caster_ee_2"
+      "model": "endereyefi:caster_ee_corner", "x": 270, "y": 270
     },
     "in=up,out=south": {
-      "model": "endereyefi:caster_ee_3"
+      "model": "endereyefi:caster_ee_corner", "x": 270, "y": 90
     },
     "in=up,out=west": {
-      "model": "endereyefi:caster_ee_4"
+      "model": "endereyefi:caster_ee_corner", "x": 270, "y": 180
     },
     "in=up,out=east": {
-      "model": "endereyefi:caster_ee_5"
+      "model": "endereyefi:caster_ee_corner", "x": 270
     },
     "in=south,out=down": {
-      "model": "endereyefi:caster_ee_6"
+      "model": "endereyefi:caster_ee_corner_inverted", "x": 90, "y": 90
     },
     "in=south,out=up": {
-      "model": "endereyefi:caster_ee_7"
+      "model": "endereyefi:caster_ee_corner_inverted", "x": 270, "y": 90
     },
     "in=south,out=north": {
-      "model": "endereyefi:caster_ee_8"
+      "model": "endereyefi:caster_ee", "x": 180
     },
     "in=south,out=west": {
-      "model": "endereyefi:caster_ee_9"
+      "model": "endereyefi:caster_ee_corner", "y": 180
     },
     "in=south,out=east": {
-      "model": "endereyefi:caster_ee_10"
+      "model": "endereyefi:caster_ee_corner", "x": 180
     },
     "in=east,out=down": {
-      "model": "endereyefi:caster_ee_11"
+      "model": "endereyefi:caster_ee_corner_inverted", "x": 90
     },
     "in=east,out=up": {
-      "model": "endereyefi:caster_ee_12"
+      "model": "endereyefi:caster_ee_corner_inverted", "x": 270
     },
     "in=east,out=north": {
-      "model": "endereyefi:caster_ee_13"
+      "model": "endereyefi:caster_ee_corner", "x": 180, "y": 270
     },
     "in=east,out=south": {
-      "model": "endereyefi:caster_ee_14"
+      "model": "endereyefi:caster_ee_corner", "y": 90
     },
     "in=east,out=west": {
-      "model": "endereyefi:caster_ee_15"
+      "model": "endereyefi:caster_ee", "y": 90
     }
   }
 }

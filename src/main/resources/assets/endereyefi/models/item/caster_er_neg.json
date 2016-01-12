@@ -1,5 +1,5 @@
 {
-  "parent": "endereyefi:block/caster_re_on_22",
+  "parent": "endereyefi:block/caster_er_on_corner",
   "display": {
     "thirdperson": {
       "rotation": [10, -45, 170],

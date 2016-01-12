@@ -3,12 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.6.0] - 2016-01-12
 ### Added
 - Caster eye recipe
 - Caster particles when powered
 
 ### Changed
-- Caster block textures
+- Caster block assets
+
+### Fixed
+- Repeater signal transmission and reception 
 
 ## [0.5.0] - 2016-01-04
 ### Added

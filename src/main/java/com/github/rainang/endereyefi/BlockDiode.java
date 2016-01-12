@@ -12,6 +12,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockDiode extends Block {
 
@@ -170,5 +172,11 @@ public abstract class BlockDiode extends Block {
 	@Override
 	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		return isPowered && !isEnderTransmitter() && getOutputSide(state) == side.getOpposite() ? 15 : 0;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(isPowered)
+			Blocks.ender_chest.randomDisplayTick(worldIn, pos, state, rand);
 	}
 }

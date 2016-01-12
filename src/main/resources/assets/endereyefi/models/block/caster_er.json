@@ -1,0 +1,7 @@
+{
+  "parent": "endereyefi:block/caster",
+  "textures": {
+    "in": "endereyefi:blocks/caster_passive",
+    "out": "endereyefi:blocks/converter_passive"
+  }
+}

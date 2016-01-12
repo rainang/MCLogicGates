@@ -1,0 +1,7 @@
+{
+  "parent": "endereyefi:block/caster",
+  "textures": {
+    "in": "endereyefi:blocks/diode_socket",
+    "out": "endereyefi:blocks/diode_socket"
+  }
+}
