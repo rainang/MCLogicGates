@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.2] - 2016-01-19
+### Fixed
+- Repeaters not locking properly
+- Caster delay to 1 tick
+
 ## [0.7.1] - 2016-01-13
 ### Fixed
 - Disabled currently unused Diode recipe causing crash
@@ -30,7 +35,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.5.0] - 2016-01-04
 ### Added
-- This change log
 - Caster blocks
 - Removed vanilla repeater from creative tabs
 
@@ -40,7 +44,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.4.0] - 2016-01-02
 ### Added
-- Replace vanilla repeater recipe with RR Repeater
+- Replaced vanilla repeater recipe with RR Repeater
 
 ### Changed
 - Updated information in mcmod.info file
@@ -51,21 +55,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.3.3] - 2016-01-01
 ### Fixed
-- Fixed locked repeater block model
+- Locked repeater block model
 
 ## [0.3.2] - 2016-01-01
 ### Fixed
-- Fixed notifyNeighbors to always notify output side block
+- Repeater notification to always notify output side block
 
 ## [0.3.1] - 2016-01-01
 ### Fixed
-- Fixed repeaters ignoring locked repeaters when checking for input
-- Fixed repeaters not notifying neighbors of change
+- Repeater ignoring locked repeaters when checking for input
+- Repeater not notifying neighbors of change
 
 ## [0.3.0] - 2015-12-31
 ### Fixed
-- Fixed signal getting blocked by other repeaters
-- Fixed repeater not locking
+- Signal getting blocked by other repeaters
+- Repeater not locking
 
 ## [0.2.0] - 2015-12-31
 ### Changed

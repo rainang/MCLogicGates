@@ -104,6 +104,12 @@ public class BlockRepeater extends BlockDiode {
 	/* Block override */
 
 	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(!isLocked(worldIn, pos, state))
+			super.updateTick(worldIn, pos, state, rand);
+	}
+
+	@Override
 	public boolean onBlockActivated(
 			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
 			float hitY, float hitZ) {
@@ -228,6 +234,11 @@ public class BlockRepeater extends BlockDiode {
 	}
 
 	/* BlockDiode impl */
+
+	protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
+		if(!isLocked(worldIn, pos, state))
+			super.updateState(worldIn, pos, state);
+	}
 
 	@Override
 	public int getTickDelay(IBlockState state) {
