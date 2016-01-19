@@ -29,19 +29,20 @@ public class BlockRepeater extends BlockDiode {
 	public static final PropertyDirection FACING = BlockDirectional.FACING;
 	public static final PropertyBool      LOCKED = BlockRedstoneRepeater.LOCKED;
 	public static final PropertyInteger   DELAY  = BlockRedstoneRepeater.DELAY;
+
 	public final int out;
 
-	protected BlockRepeater(boolean powered, int type, int out) {
-		super(Material.circuits, powered, type);
+	protected BlockRepeater(boolean active, int type, int out) {
+		super(Material.circuits, active, type);
 		this.out = out;
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
-		setLightLevel(powered ? 0.25f : 0);
-		if(!powered && out == 1)
+		setLightLevel(active ? 0.25f : 0);
+		if(!active && out == 1)
 			setCreativeTab(CreativeTabs.tabRedstone);
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		setUnlocalizedName("repeater_" + (type == 0 ? "rr" : type == 1 ? "er" : type == 2 ? "re" : "ee") +
 				(out == 0 ? "l" : out == 2 ? "r" : "") +
-				(powered ? "_on" : ""));
+				(active ? "_on" : ""));
 	}
 
 	protected int getPowerOnSides(IBlockAccess worldIn, BlockPos pos, IBlockState state) {

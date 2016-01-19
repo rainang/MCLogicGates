@@ -20,11 +20,13 @@ public class EnderBlocks {
 					REPEATERS[p][t][o] = new BlockRepeater(p == 1, t, o);
 					registerBlock(REPEATERS[p][t][o], client);
 				}
-		for(int type = 0; type < 4; type++)
-			for(int neg = 0; neg < 2; neg++)
-				for(int on = 0; on < 2; on++) {
-					CASTERS[type][neg][on] = neg == 0 ? new BlockCaster(type, on == 1)
-													  : new BlockCaster.BlockCasterNeg(type, on == 1);
+		for(int neg = 0; neg < 2; neg++)
+			for(int on = 0; on < 2; on++)
+				for(int type = 0; type < 4; type++) {
+					String name = type == 0 ? "caster_rr"
+											: type == 1 ? "caster_er" : type == 2 ? "caster_re" : "caster_ee";
+					CASTERS[type][neg][on] = neg == 0 ? new BlockCaster(name, type, on == 1)
+													  : new BlockCaster.BlockCasterNeg(name, type, on == 1);
 					registerBlock(CASTERS[type][neg][on], client);
 				}
 		registerBlock(enderCasterEye, client);

@@ -35,32 +35,26 @@ public class BlockCaster extends BlockDiode {
 
 	public static final PropertyDirection OUT = PropertyDirection.create("out");
 
-	public BlockCaster(int type, boolean isActive) {
+	public BlockCaster(String name, int type, boolean isActive) {
 		super(Material.ground, isActive, type);
 		boolean neg = isNegative();
-
 		if(!neg && !isActive)
 			setCreativeTab(EnderEyeFi.TAB_EYE);
+
 		setLightLevel(isActive ? 0.25f : 0);
 		EnumFacing facing = neg ? EnumFacing.DOWN : EnumFacing.UP;
 		setDefaultState(getBlockState().getBaseState()
 				.withProperty(getInProperty(), facing)
 				.withProperty(OUT, facing.getOpposite()));
-		setResistance(10.0F);
-
-		String name = "";
-		name += type == 0 ? "caster_rr" : type == 1 ? "caster_er" : type == 2 ? "caster_re" : "caster_ee";
-		name += neg ? "_neg" : "";
-		name += isActive ? "_on" : "";
-		setUnlocalizedName(name);
-
+		setUnlocalizedName(name + (neg ? "_neg" : "") + (isActive ? "_on" : ""));
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1, 1, 1);
+		setResistance(10.0F);
 	}
 
 	public static class BlockCasterNeg extends BlockCaster {
 
-		public BlockCasterNeg(int type, boolean isActive) {
-			super(type, isActive);
+		public BlockCasterNeg(String name, int type, boolean isActive) {
+			super(name, type, isActive);
 		}
 
 		@Override
