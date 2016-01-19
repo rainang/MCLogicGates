@@ -15,6 +15,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,9 +35,13 @@ public class EnderEyeFi {
 	};
 
 	@EventHandler
+	public void preinit(FMLPreInitializationEvent event) {
+		EnderBlocks.init(event.getSide() == Side.CLIENT);
+	}
+
+	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
-		EnderBlocks.init(event.getSide() == Side.CLIENT);
 
 		Items.repeater.setCreativeTab(null);
 		for(Object o : CraftingManager.getInstance().getRecipeList())
