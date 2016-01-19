@@ -30,6 +30,9 @@ tile.diode.name=Diode
 
 tile.caster_eye.name=Signal Caster Eye
 
+tile.caster_rr.name=RR Signal Caster
+tile.caster_rr_active.name=RR Signal Caster (On)
+
 tile.caster_ee.name=EE Signal Caster
 tile.caster_ee_active.name=EE Signal Caster (On)
 

@@ -35,26 +35,23 @@ public class BlockCaster extends BlockDiode {
 
 	public static final PropertyDirection OUT = PropertyDirection.create("out");
 
-	protected final int type;
-
-	public BlockCaster(int type, boolean isPowered) {
-		super(Material.ground, isPowered);
-		this.type = type;
+	public BlockCaster(int type, boolean isActive) {
+		super(Material.ground, isActive, type);
 		boolean neg = isNegative();
 
-		if(!neg && !isPowered)
+		if(!neg && !isActive)
 			setCreativeTab(EnderEyeFi.TAB_EYE);
-		setLightLevel(isPowered ? 0.25f : 0);
+		setLightLevel(isActive ? 0.25f : 0);
 		EnumFacing facing = neg ? EnumFacing.DOWN : EnumFacing.UP;
 		setDefaultState(getBlockState().getBaseState()
 				.withProperty(getInProperty(), facing)
 				.withProperty(OUT, facing.getOpposite()));
-		setHardness(0.25F).setResistance(10.0F);
+		setResistance(10.0F);
 
 		String name = "";
-		name += type == 0 ? "diode" : type == 1 ? "caster_ee" : type == 2 ? "caster_re" : "caster_er";
+		name += type == 0 ? "caster_rr" : type == 1 ? "caster_er" : type == 2 ? "caster_re" : "caster_ee";
 		name += neg ? "_neg" : "";
-		name += isPowered ? "_on" : "";
+		name += isActive ? "_on" : "";
 		setUnlocalizedName(name);
 
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1, 1, 1);
@@ -62,8 +59,8 @@ public class BlockCaster extends BlockDiode {
 
 	public static class BlockCasterNeg extends BlockCaster {
 
-		public BlockCasterNeg(int type, boolean isPowered) {
-			super(type, isPowered);
+		public BlockCasterNeg(int type, boolean isActive) {
+			super(type, isActive);
 		}
 
 		@Override
@@ -84,51 +81,105 @@ public class BlockCaster extends BlockDiode {
 		return IN_POS;
 	}
 
-	public BlockCaster getNegative() {
-		return EnderBlocks.getEnderDiode(type, !(isNegative()), isPowered);
+	/**
+	 * Gets block state with the given input and output.
+	 * <p/>
+	 * Note: This does not allow input and output to be the same. In the event that the given parameters are the
+	 * same, the output is set to opposite the input.
+	 *
+	 * @param in
+	 * 		the new input side
+	 * @param out
+	 * 		the new output side
+	 *
+	 * @return the new block state
+	 */
+	protected IBlockState getStateWithIO(EnumFacing in, EnumFacing out) {
+		if(in == out)
+			out = in.getOpposite();
+		BlockCaster block = this;
+		if(!isOnThisAxisDirection(in))
+			block = EnderBlocks.getEnderDiode(type, !isNegative(), isActive);
+		return block.getDefaultState().withProperty(block.getInProperty(), in).withProperty(OUT, out);
 	}
 
 	/* Block override */
 
+	/** Sets the block's input and/or output on activation */
 	@Override
 	public boolean onBlockActivated(
 			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
 			float hitY, float hitZ) {
 		if(!playerIn.capabilities.allowEdit)
 			return false;
-		BlockDiode diode = (BlockDiode)state.getBlock();
-		if(diode.getInputSide(state) == side || diode.getOutputSide(state) == side)
-			return false;
-		else if(playerIn.isSneaking()) {
-			BlockCaster b = getInProperty().getAllowedValues().contains(side) ? this : getNegative();
-			IBlockState bs = b.getDefaultState()
-					.withProperty(b.getInProperty(), side)
-					.withProperty(OUT, state.getValue(OUT));
-			if(b.shouldBePowered(worldIn, pos, bs) != isPowered)
-				bs = EnderBlocks.getEnderDiode(type, b.isNegative(), !isPowered)
-						.getDefaultState()
-						.withProperty(b.getInProperty(), side)
-						.withProperty(OUT, state.getValue(OUT));
-			worldIn.setBlockState(pos, bs);
-		} else
-			worldIn.setBlockState(pos, state.withProperty(OUT, side));
+		EnumFacing in = getInput(state);
+		EnumFacing out = getOutput(state);
+
+		if(playerIn.isSneaking()) {
+			if(in == side) // move output opposite input
+				out = side.getOpposite();
+			else if(out == side) // move input opposite output
+				in = side.getOpposite();
+			else // move input
+				in = side;
+		} else if(in == side || out == side) { // invert io
+			EnumFacing facing = in;
+			in = out;
+			out = facing;
+		} else // move output
+			out = side;
+
+		state = getStateWithIO(in, out);
+
+		// check for power and change to appropriate state
+		boolean shouldPower = getAsDiode(state).shouldBeActive(worldIn, pos, state);
+		if(shouldPower && !isActive)
+			state = getActiveState(state);
+		else if(!shouldPower && isActive)
+			state = getPassiveState(state);
+
+		// set and notify
+		worldIn.setBlockState(pos, state);
 		notifyNeighbors(worldIn, pos, state);
 		return true;
 	}
 
+	/** Retrieves the block's state with input and output based on player behaviour and block hit */
 	@Override
 	public IBlockState onBlockPlaced(
 			World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
 			EntityLivingBase placer) {
-		if(!placer.isSneaking())
-			facing = placer.getHorizontalFacing();
-		if(isOnThisAxisDirection(facing)) {
-			BlockCaster block = getNegative();
-			return block.getDefaultState()
-					.withProperty(block.getInProperty(), facing.getOpposite())
-					.withProperty(OUT, facing);
+		IBlockState hitState = worldIn.getBlockState(pos.offset(facing.getOpposite()));
+		EnumFacing in = EnumFacing.SOUTH;
+		EnumFacing out = EnumFacing.NORTH;
+
+		boolean flag = false;
+		if(hitState.getBlock() instanceof BlockDiode) {
+			BlockDiode hitBlock = (BlockDiode)hitState.getBlock();
+
+			// try to connect to input
+			if(hitBlock.getInput(hitState) == facing && hitBlock.canReceiveSignalFrom(this)) {
+				in = placer.getHorizontalFacing().getOpposite();
+				out = facing.getOpposite();
+				flag = true;
+			} else // try to connect to output
+				if(hitBlock.getOutput(hitState) == facing && canReceiveSignalFrom(hitBlock)) {
+					in = facing.getOpposite();
+					out = placer.getHorizontalFacing().getOpposite();
+					flag = true;
+				}
 		}
-		return getDefaultState().withProperty(getInProperty(), facing.getOpposite()).withProperty(OUT, facing);
+
+		if(!flag)
+			if(!placer.isSneaking()) { // place based on player facing
+				in = placer.getHorizontalFacing().getOpposite();
+				out = placer.getHorizontalFacing();
+			} else { // connect input to block face
+				in = facing.getOpposite();
+				out = placer.getHorizontalFacing().getOpposite();
+			}
+
+		return getStateWithIO(in, out);
 	}
 
 	@Override
@@ -163,13 +214,13 @@ public class BlockCaster extends BlockDiode {
 	}
 
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(EnderBlocks.getEnderDiode(type, false, false));
+	public boolean isNormalCube(IBlockAccess world, BlockPos pos) {
+		return true;
 	}
 
 	@Override
-	public boolean isNormalCube(IBlockAccess world, BlockPos pos) {
-		return true;
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Item.getItemFromBlock(EnderBlocks.getEnderDiode(type, false, false));
 	}
 
 	@Override
@@ -181,43 +232,28 @@ public class BlockCaster extends BlockDiode {
 	/* BlockDiode impl */
 
 	@Override
-	public int getTickDelay(IBlockState state) {
-		return 2;
-	}
-
-	@Override
-	public boolean isEnderTransmitter() {
-		return type != 3;
-	}
-
-	@Override
-	public boolean isEnderReceiver() {
-		return type%2 == 1;
-	}
-
-	@Override
-	public IBlockState getPoweredState(IBlockState state) {
-		return EnderBlocks.getEnderDiode(type, isNegative(), true)
+	public IBlockState getActiveState(IBlockState state) {
+		return getAsDiode(state).isActive ? state : EnderBlocks.getEnderDiode(type, isNegative(), true)
 				.getDefaultState()
 				.withProperty(getInProperty(), state.getValue(getInProperty()))
 				.withProperty(OUT, state.getValue(OUT));
 	}
 
 	@Override
-	public IBlockState getUnpoweredState(IBlockState state) {
-		return EnderBlocks.getEnderDiode(type, isNegative(), false)
+	public IBlockState getPassiveState(IBlockState state) {
+		return !getAsDiode(state).isActive ? state : EnderBlocks.getEnderDiode(type, isNegative(), false)
 				.getDefaultState()
 				.withProperty(getInProperty(), state.getValue(getInProperty()))
 				.withProperty(OUT, state.getValue(OUT));
 	}
 
 	@Override
-	public EnumFacing getInputSide(IBlockState state) {
+	public EnumFacing getInput(IBlockState state) {
 		return (EnumFacing)state.getValue(getInProperty());
 	}
 
 	@Override
-	public EnumFacing getOutputSide(IBlockState state) {
+	public EnumFacing getOutput(IBlockState state) {
 		return (EnumFacing)state.getValue(OUT);
 	}
 }

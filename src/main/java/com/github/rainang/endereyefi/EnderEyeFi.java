@@ -57,18 +57,20 @@ public class EnderEyeFi {
 		GameRegistry.addShapelessRecipe(new ItemStack(EnderBlocks.REPEATERS[0][2][1], 1),
 				EnderBlocks.REPEATERS[0][1][1]);
 
-		//		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[0][0][0], 6), "#X#", "#E#", "#X#", 'E',
-		//				Items.ender_eye, '#', Blocks.obsidian, 'X', Blocks.glass);
-		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[1][0][0], 6), "#X#", "#E#", "#X#", 'E',
-				Items.ender_eye, '#', Blocks.obsidian, 'X', Items.ender_pearl);
-		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[2][0][0], 6), "#X#", "#E#", "#Y#", 'E',
+		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[0][0][0], 6), "#X#", "#E#", "#X#", 'E',
+				Items.ender_eye, '#', Blocks.obsidian, 'X', Blocks.redstone_block);
+		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[1][0][0], 6), "#X#", "#E#", "#Y#", 'E',
 				Items.ender_eye, '#', Blocks.obsidian, 'Y', Items.ender_pearl, 'X', Blocks.redstone_block);
-		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[3][0][0], 6), "#X#", "#E#", "#Y#", 'E',
+		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[2][0][0], 6), "#X#", "#E#", "#Y#", 'E',
 				Items.ender_eye, '#', Blocks.obsidian, 'X', Items.ender_pearl, 'Y', Blocks.redstone_block);
+		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.CASTERS[3][0][0], 6), "#X#", "#E#", "#X#", 'E',
+				Items.ender_eye, '#', Blocks.obsidian, 'X', Items.ender_pearl);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(EnderBlocks.CASTERS[1][0][0], 1), EnderBlocks.CASTERS[2][0][0]);
+		GameRegistry.addShapelessRecipe(new ItemStack(EnderBlocks.CASTERS[2][0][0], 1), EnderBlocks.CASTERS[1][0][0]);
+
 		GameRegistry.addShapedRecipe(new ItemStack(EnderBlocks.enderCasterEye, 1), "#X#", "XEX", "#X#", 'E',
 				Items.ender_eye, '#', Blocks.obsidian, 'X', Blocks.glass);
-		GameRegistry.addShapelessRecipe(new ItemStack(EnderBlocks.CASTERS[2][0][0], 1), EnderBlocks.CASTERS[3][0][0]);
-		GameRegistry.addShapelessRecipe(new ItemStack(EnderBlocks.CASTERS[3][0][0], 1), EnderBlocks.CASTERS[2][0][0]);
 	}
 
 	@SubscribeEvent

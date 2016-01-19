@@ -17,35 +17,37 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockDiode extends Block {
 
-	public final boolean isPowered;
+	public final boolean isActive;
 
-	protected BlockDiode(Material material, boolean powered) {
+	public final int type;
+
+	protected BlockDiode(Material material, boolean active, int type) {
 		super(material);
-		isPowered = powered;
+		isActive = active;
+		this.type = type;
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	protected int calculateInputStrength(World worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		for(int i = 1; i < 16; i++) {
-			IBlockState inputState = worldIn.getBlockState(pos.offset(side, i));
+			BlockPos inputPos = pos.offset(side, i);
+			IBlockState inputState = worldIn.getBlockState(inputPos);
 			BlockDiode inputBlock = getAsDiode(inputState);
 			boolean flag = false;
 			if(inputBlock != null) {
 				flag = inputBlock.isEnderReceiver() || !isEnderReceiver();
 				if(inputBlock instanceof BlockCasterEye && isEnderReceiver())
 					return 15;
-				if(inputBlock.isPowered && isTypeCompatible(inputBlock) && isIOCompatible(inputState, state))
+				if(inputBlock.isActive && canReceiveSignalFrom(inputBlock) && isIOCompatible(inputState, state))
 					return 15;
 			} else if(i == 1 && !isEnderReceiver()) { // do vanilla calculation
-				BlockPos blockpos1 = pos.offset(side);
-				int power = worldIn.getRedstonePower(blockpos1, side);
+				int power = worldIn.getRedstonePower(inputPos, side);
 				if(power >= 15)
 					return power;
 				else {
-					IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
-					return Math.max(power,
-							iblockstate1.getBlock() == Blocks.redstone_wire ? (Integer)iblockstate1.getValue(
-									BlockRedstoneWire.POWER) : 0);
+					return Math.max(power, inputState.getBlock() == Blocks.redstone_wire ? (Integer)inputState
+							.getValue(
+							BlockRedstoneWire.POWER)                                     : 0);
 				}
 			}
 			if(flag)
@@ -57,82 +59,96 @@ public abstract class BlockDiode extends Block {
 	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
 		if(isEnderTransmitter() || isEnderReceiver())
 			for(EnumFacing facing : EnumFacing.values())
-				for(int i = 0; i < 16; i++) {
-					BlockPos offset = pos.offset(facing, i + 1);
-					IBlockState offsetState = worldIn.getBlockState(offset);
-					BlockDiode block = getAsDiode(offsetState);
+				for(int i = 1; i < 16; i++) {
+					BlockPos offset = pos.offset(facing, i);
+					BlockDiode block = getAsDiode(worldIn.getBlockState(offset));
 					if(block != null && block.isEnderReceiver()) {
 						worldIn.notifyBlockOfStateChange(offset, this);
 						worldIn.notifyNeighborsOfStateChange(offset, this);
 						break;
 					}
 				}
-		EnumFacing facing = getOutputSide(state);
+		EnumFacing facing = getOutput(state);
 		BlockPos output = pos.offset(facing);
 		worldIn.notifyBlockOfStateChange(output, this);
 		worldIn.notifyNeighborsOfStateExcept(output, this, facing.getOpposite());
 	}
 
 	protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
-		boolean flag = shouldBePowered(worldIn, pos, state);
-		if((isPowered && !flag || !isPowered && flag) && !worldIn.isBlockTickPending(pos, this)) {
+		boolean flag = shouldBeActive(worldIn, pos, state);
+		if((isActive && !flag || !isActive && flag) && !worldIn.isBlockTickPending(pos, this)) {
 			byte b0 = -1;
 			if(isFacingTowardsRepeater(worldIn, pos, state))
 				b0 = -3;
-			else if(isPowered)
+			else if(isActive)
 				b0 = -2;
 			worldIn.updateBlockTick(pos, this, getTickDelay(state), b0);
 		}
 	}
 
 	protected boolean isFacingTowardsRepeater(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing output = getOutputSide(state);
+		EnumFacing output = getOutput(state);
 		BlockPos blockpos1 = pos.offset(output);
 		return BlockRedstoneRepeater.isRedstoneRepeaterBlockID(worldIn.getBlockState(blockpos1).getBlock()) &&
 				worldIn.getBlockState(blockpos1).getValue(BlockDirectional.FACING) != output;
 	}
 
-	protected boolean shouldBePowered(World worldIn, BlockPos pos, IBlockState state) {
-		return calculateInputStrength(worldIn, pos, state, getInputSide(state)) > 0;
+	protected boolean shouldBeActive(World worldIn, BlockPos pos, IBlockState state) {
+		return calculateInputStrength(worldIn, pos, state, getInput(state)) > 0;
 	}
 
+	/** Checks if both are instances of BlockDiode and the transmitter output is opposite the receiver input */
 	protected boolean isIOCompatible(IBlockState transmitter, IBlockState receiver) {
 		BlockDiode dTransmitter = getAsDiode(transmitter);
 		BlockDiode dReceiver = getAsDiode(receiver);
 		return dTransmitter != null && dReceiver != null &&
-				dTransmitter.getOutputSide(transmitter) == dReceiver.getInputSide(receiver).getOpposite();
+				dTransmitter.getOutput(transmitter) == dReceiver.getInput(receiver).getOpposite();
 	}
 
-	protected boolean isTypeCompatible(BlockDiode block) {
+	protected boolean canReceiveSignalFrom(BlockDiode block) {
 		return block.isEnderTransmitter() == isEnderReceiver();
 	}
 
+	/** Returns the state's block as BlockDiode if instance of BlockDiode, null otherwise */
 	protected BlockDiode getAsDiode(IBlockState state) {
 		return state.getBlock() instanceof BlockDiode ? (BlockDiode)state.getBlock() : null;
 	}
 
+	/** This block's signal transmission type */
+	public boolean isEnderTransmitter() {
+		return type >= 2;
+	}
+
+	/** This block's signal reception type */
+	public boolean isEnderReceiver() {
+		return type%2 == 1;
+	}
+
+	/** This block's signal transmission delay */
+	public int getTickDelay(IBlockState state) {
+		return 2;
+	}
+
 	/* Abstract methods */
 
-	public abstract int getTickDelay(IBlockState state);
+	/** Retrieves the active state of the given state. Returns the state if is already active */
+	public abstract IBlockState getActiveState(IBlockState state);
 
-	public abstract boolean isEnderTransmitter();
+	/** Retrieves the passive state of the given state. Returns the state if is already passive */
+	public abstract IBlockState getPassiveState(IBlockState state);
 
-	public abstract boolean isEnderReceiver();
+	/** Retrieves the state's input value */
+	public abstract EnumFacing getInput(IBlockState state);
 
-	public abstract IBlockState getPoweredState(IBlockState state);
-
-	public abstract IBlockState getUnpoweredState(IBlockState state);
-
-	public abstract EnumFacing getInputSide(IBlockState state);
-
-	public abstract EnumFacing getOutputSide(IBlockState state);
+	/** Retrieves the state's output value */
+	public abstract EnumFacing getOutput(IBlockState state);
 
 	/* Block override */
 
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		if(calculateInputStrength(worldIn, pos, state, getInputSide(state)) > 0)
-			worldIn.setBlockState(pos, getPoweredState(state));
+		if(shouldBeActive(worldIn, pos, state))
+			worldIn.setBlockState(pos, getActiveState(state));
 		notifyNeighbors(worldIn, pos, state);
 	}
 
@@ -149,13 +165,13 @@ public abstract class BlockDiode extends Block {
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		boolean flag = shouldBePowered(worldIn, pos, state);
-		if(isPowered && !flag)
-			worldIn.setBlockState(pos, getUnpoweredState(state), 2);
-		else if(!isPowered) {
-			worldIn.setBlockState(pos, getPoweredState(state), 2);
+		boolean flag = shouldBeActive(worldIn, pos, state);
+		if(isActive && !flag)
+			worldIn.setBlockState(pos, getPassiveState(state), 2);
+		else if(!isActive) {
+			worldIn.setBlockState(pos, getActiveState(state), 2);
 			if(!flag)
-				worldIn.updateBlockTick(pos, getPoweredState(state).getBlock(), getTickDelay(state), -1);
+				worldIn.updateBlockTick(pos, getActiveState(state).getBlock(), getTickDelay(state), -1);
 		}
 	}
 
@@ -171,12 +187,12 @@ public abstract class BlockDiode extends Block {
 
 	@Override
 	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
-		return isPowered && !isEnderTransmitter() && getOutputSide(state) == side.getOpposite() ? 15 : 0;
+		return isActive && !isEnderTransmitter() && getOutput(state) == side.getOpposite() ? 15 : 0;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if(isPowered)
+		if(isActive)
 			Blocks.ender_chest.randomDisplayTick(worldIn, pos, state, rand);
 	}
 }

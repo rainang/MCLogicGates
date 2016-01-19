@@ -20,7 +20,7 @@ public class EnderBlocks {
 					REPEATERS[p][t][o] = new BlockRepeater(p == 1, t, o);
 					registerBlock(REPEATERS[p][t][o], client);
 				}
-		for(int type = 1; type < 4; type++)
+		for(int type = 0; type < 4; type++)
 			for(int neg = 0; neg < 2; neg++)
 				for(int on = 0; on < 2; on++) {
 					CASTERS[type][neg][on] = neg == 0 ? new BlockCaster(type, on == 1)

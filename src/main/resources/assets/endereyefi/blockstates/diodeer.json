@@ -1,0 +1,75 @@
+{
+  "variants": {
+	"active=false,direction=du": { "model": "endereyefi:caster_er", "x": 90 },
+	"active=false,direction=dn": { "model": "endereyefi:caster_er_corner", "x": 90, "y": 270 },
+	"active=false,direction=ds": { "model": "endereyefi:caster_er_corner", "x": 90, "y": 90 },
+	"active=false,direction=dw": { "model": "endereyefi:caster_er_corner", "x": 90, "y": 180 },
+	"active=false,direction=de": { "model": "endereyefi:caster_er_corner", "x": 90 },
+
+	"active=false,direction=ud": { "model": "endereyefi:caster_er", "x": 270 },
+	"active=false,direction=un": { "model": "endereyefi:caster_er_corner", "x": 270, "y": 270 },
+	"active=false,direction=us": { "model": "endereyefi:caster_er_corner", "x": 270, "y": 90 },
+	"active=false,direction=uw": { "model": "endereyefi:caster_er_corner", "x": 270, "y": 180 },
+	"active=false,direction=ue": { "model": "endereyefi:caster_er_corner", "x": 270 },
+
+	"active=false,direction=nd": { "model": "endereyefi:caster_er_corner_inverted", "x": 90, "y": 270 },
+	"active=false,direction=nu": { "model": "endereyefi:caster_er_corner_inverted", "x": 270, "y": 270 },
+	"active=false,direction=ns": { "model": "endereyefi:caster_er" },
+	"active=false,direction=nw": { "model": "endereyefi:caster_er_corner", "x": 180, "y": 180 },
+	"active=false,direction=ne": { "model": "endereyefi:caster_er_corner" },
+
+	"active=false,direction=sd": { "model": "endereyefi:caster_er_corner_inverted", "x": 90, "y": 90 },
+	"active=false,direction=su": { "model": "endereyefi:caster_er_corner_inverted", "x": 270, "y": 90 },
+	"active=false,direction=sn": { "model": "endereyefi:caster_er", "x": 180 },
+	"active=false,direction=sw": { "model": "endereyefi:caster_er_corner", "y": 180 },
+	"active=false,direction=se": { "model": "endereyefi:caster_er_corner", "x": 180 },
+
+	"active=false,direction=wd": { "model": "endereyefi:caster_er_corner_inverted", "x": 90, "y": 180 },
+	"active=false,direction=wu": { "model": "endereyefi:caster_er_corner_inverted", "x": 270, "y": 180 },
+	"active=false,direction=wn": { "model": "endereyefi:caster_er_corner", "y": 270 },
+	"active=false,direction=ws": { "model": "endereyefi:caster_er_corner", "x": 180, "y": 90 },
+	"active=false,direction=we": { "model": "endereyefi:caster_er", "y": 270 },
+
+	"active=false,direction=ed": { "model": "endereyefi:caster_er_corner_inverted", "x": 90 },
+	"active=false,direction=eu": { "model": "endereyefi:caster_er_corner_inverted", "x": 270 },
+	"active=false,direction=en": { "model": "endereyefi:caster_er_corner", "x": 180, "y": 270 },
+	"active=false,direction=es": { "model": "endereyefi:caster_er_corner", "y": 90 },
+	"active=false,direction=ew": { "model": "endereyefi:caster_er", "y": 90 },
+
+	"active=true,direction=du": { "model": "endereyefi:caster_er_on", "x": 90 },
+	"active=true,direction=dn": { "model": "endereyefi:caster_er_on_corner", "x": 90, "y": 270 },
+	"active=true,direction=ds": { "model": "endereyefi:caster_er_on_corner", "x": 90, "y": 90 },
+	"active=true,direction=dw": { "model": "endereyefi:caster_er_on_corner", "x": 90, "y": 180 },
+	"active=true,direction=de": { "model": "endereyefi:caster_er_on_corner", "x": 90 },
+
+	"active=true,direction=ud": { "model": "endereyefi:caster_er_on", "x": 270 },
+	"active=true,direction=un": { "model": "endereyefi:caster_er_on_corner", "x": 270, "y": 270 },
+	"active=true,direction=us": { "model": "endereyefi:caster_er_on_corner", "x": 270, "y": 90 },
+	"active=true,direction=uw": { "model": "endereyefi:caster_er_on_corner", "x": 270, "y": 180 },
+	"active=true,direction=ue": { "model": "endereyefi:caster_er_on_corner", "x": 270 },
+
+	"active=true,direction=nd": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 90, "y": 270 },
+	"active=true,direction=nu": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 270, "y": 270 },
+	"active=true,direction=ns": { "model": "endereyefi:caster_er_on" },
+	"active=true,direction=nw": { "model": "endereyefi:caster_er_on_corner", "x": 180, "y": 180 },
+	"active=true,direction=ne": { "model": "endereyefi:caster_er_on_corner" },
+
+	"active=true,direction=sd": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 90, "y": 90 },
+	"active=true,direction=su": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 270, "y": 90 },
+	"active=true,direction=sn": { "model": "endereyefi:caster_er_on", "x": 180 },
+	"active=true,direction=sw": { "model": "endereyefi:caster_er_on_corner", "y": 180 },
+	"active=true,direction=se": { "model": "endereyefi:caster_er_on_corner", "x": 180 },
+
+	"active=true,direction=wd": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 90, "y": 180 },
+	"active=true,direction=wu": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 270, "y": 180 },
+	"active=true,direction=wn": { "model": "endereyefi:caster_er_on_corner", "y": 270 },
+	"active=true,direction=ws": { "model": "endereyefi:caster_er_on_corner", "x": 180, "y": 90 },
+	"active=true,direction=we": { "model": "endereyefi:caster_er_on", "y": 270 },
+
+	"active=true,direction=ed": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 90 },
+	"active=true,direction=eu": { "model": "endereyefi:caster_er_on_corner_inverted", "x": 270 },
+	"active=true,direction=en": { "model": "endereyefi:caster_er_on_corner", "x": 180, "y": 270 },
+	"active=true,direction=es": { "model": "endereyefi:caster_er_on_corner", "y": 90 },
+	"active=true,direction=ew": { "model": "endereyefi:caster_er_on", "y": 90 }
+  }
+}

@@ -4,6 +4,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0] - 2016-01-19
+### Added
+- RR Caster
+- More Caster on place orientation options
+	- if placed on other Diode's face, will try to connect input to output or vice versa
+	- if sneaking, will connect input to hit Block's face
+	- otherwise defaults to same as BlockRedstoneRepeater
+- More Caster I/O configuration by block activation
+	- right click input or output to invert
+	- shift + right click input to move output opposite of input
+	- shift + right click output to move input opposite of output
+
+### Changed
+- Default tick delay to 1 tick
+- Caster block hardness
+
+### Fixed
+- Subtle mistake in textures
+
 ## [0.7.2] - 2016-01-19
 ### Fixed
 - Repeaters not locking properly

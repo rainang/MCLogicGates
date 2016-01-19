@@ -29,13 +29,10 @@ public class BlockRepeater extends BlockDiode {
 	public static final PropertyDirection FACING = BlockDirectional.FACING;
 	public static final PropertyBool      LOCKED = BlockRedstoneRepeater.LOCKED;
 	public static final PropertyInteger   DELAY  = BlockRedstoneRepeater.DELAY;
-
-	public final int type;
 	public final int out;
 
 	protected BlockRepeater(boolean powered, int type, int out) {
-		super(Material.circuits, powered);
-		this.type = type;
+		super(Material.circuits, powered, type);
 		this.out = out;
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
 		setLightLevel(powered ? 0.25f : 0);
@@ -60,8 +57,8 @@ public class BlockRepeater extends BlockDiode {
 					if(sideBlock instanceof BlockRepeater) {
 						BlockRepeater br = (BlockRepeater)sideBlock;
 						if(br.isEnderTransmitter() &&
-								br.getOutputSide(sideState) == side.getOpposite() &&
-								br.isPowered)
+								br.getOutput(sideState) == side.getOpposite() &&
+								br.isActive)
 							return 15;
 						if(br.isEnderReceiver())
 							break;
@@ -74,8 +71,8 @@ public class BlockRepeater extends BlockDiode {
 
 				if(sideBlock instanceof BlockRepeater) {
 					BlockRepeater br = (BlockRepeater)sideBlock;
-					if(br.isPowered && !br.isEnderTransmitter() &&
-							br.getOutputSide(sideState) == side.getOpposite())
+					if(br.isActive && !br.isEnderTransmitter() &&
+							br.getOutput(sideState) == side.getOpposite())
 						return 15;
 				} else if(BlockRedstoneRepeater.isRedstoneRepeaterBlockID(sideBlock) &&
 						sideBlock != Blocks.unpowered_repeater &&
@@ -92,11 +89,11 @@ public class BlockRepeater extends BlockDiode {
 	}
 
 	public EnumFacing[] getSides(IBlockState state) {
-		EnumFacing enumfacing = getInputSide(state);
+		EnumFacing enumfacing = getInput(state);
 		EnumFacing[] sides = new EnumFacing[2];
 		int i = 0;
 		for(EnumFacing f : EnumFacing.HORIZONTALS)
-			if(!f.equals(enumfacing) && !f.equals(getOutputSide(state)))
+			if(!f.equals(enumfacing) && !f.equals(getOutput(state)))
 				sides[i++] = f;
 		return sides;
 	}
@@ -117,7 +114,7 @@ public class BlockRepeater extends BlockDiode {
 			return false;
 		} else {
 			if(playerIn.isSneaking()) {
-				Block b = EnderBlocks.REPEATERS[isPowered ? 1 : 0][type][(out + 1)%3];
+				Block b = EnderBlocks.REPEATERS[isActive ? 1 : 0][type][(out + 1)%3];
 				worldIn.setBlockState(pos, b.getDefaultState()
 						.withProperty(FACING, state.getValue(FACING))
 						.withProperty(DELAY, state.getValue(DELAY)));
@@ -186,8 +183,8 @@ public class BlockRepeater extends BlockDiode {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if(isPowered) {
-			EnumFacing enumfacing = getInputSide(state);
+		if(isActive) {
+			EnumFacing enumfacing = getInput(state);
 			double d0 = (double)((float)pos.getX() + 0.5F) + (double)(rand.nextFloat() - 0.5F)*0.2;
 			double d1 = (double)((float)pos.getY() + 0.4F) + (double)(rand.nextFloat() - 0.5F)*0.2;
 			double d2 = (double)((float)pos.getZ() + 0.5F) + (double)(rand.nextFloat() - 0.5F)*0.2;
@@ -235,6 +232,7 @@ public class BlockRepeater extends BlockDiode {
 
 	/* BlockDiode impl */
 
+	@Override
 	protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
 		if(!isLocked(worldIn, pos, state))
 			super.updateState(worldIn, pos, state);
@@ -246,20 +244,10 @@ public class BlockRepeater extends BlockDiode {
 	}
 
 	@Override
-	public boolean isEnderTransmitter() {
-		return type >= 2;
-	}
-
-	@Override
-	public boolean isEnderReceiver() {
-		return type%2 == 1;
-	}
-
-	@Override
-	public IBlockState getPoweredState(IBlockState state) {
+	public IBlockState getActiveState(IBlockState state) {
 		Integer integer = (Integer)state.getValue(DELAY);
 		Boolean bool = (Boolean)state.getValue(LOCKED);
-		EnumFacing enumfacing = getInputSide(state);
+		EnumFacing enumfacing = getInput(state);
 		return EnderBlocks.REPEATERS[1][type][out].getDefaultState()
 				.withProperty(FACING, enumfacing)
 				.withProperty(DELAY, integer)
@@ -267,10 +255,10 @@ public class BlockRepeater extends BlockDiode {
 	}
 
 	@Override
-	public IBlockState getUnpoweredState(IBlockState state) {
+	public IBlockState getPassiveState(IBlockState state) {
 		Integer integer = (Integer)state.getValue(DELAY);
 		Boolean bool = (Boolean)state.getValue(LOCKED);
-		EnumFacing enumfacing = getInputSide(state);
+		EnumFacing enumfacing = getInput(state);
 		return EnderBlocks.REPEATERS[0][type][out].getDefaultState()
 				.withProperty(FACING, enumfacing)
 				.withProperty(DELAY, integer)
@@ -278,13 +266,13 @@ public class BlockRepeater extends BlockDiode {
 	}
 
 	@Override
-	public EnumFacing getInputSide(IBlockState state) {
+	public EnumFacing getInput(IBlockState state) {
 		return (EnumFacing)state.getValue(FACING);
 	}
 
 	@Override
-	public EnumFacing getOutputSide(IBlockState state) {
-		EnumFacing facing = getInputSide(state);
+	public EnumFacing getOutput(IBlockState state) {
+		EnumFacing facing = getInput(state);
 		return out == 0 ? facing.rotateY() : out == 1 ? facing.getOpposite() : out == 2 ? facing.rotateYCCW() : facing;
 	}
 }

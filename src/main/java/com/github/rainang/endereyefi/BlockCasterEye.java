@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class BlockCasterEye extends BlockDiode {
 
 	public BlockCasterEye() {
-		super(Material.ground, true);
+		super(Material.ground, true, 3);
 		setUnlocalizedName("caster_eye");
 		setCreativeTab(EnderEyeFi.TAB_EYE);
 	}
@@ -20,42 +20,27 @@ public class BlockCasterEye extends BlockDiode {
 	}
 
 	@Override
-	protected boolean shouldBePowered(World worldIn, BlockPos pos, IBlockState state) {
+	protected boolean shouldBeActive(World worldIn, BlockPos pos, IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public int getTickDelay(IBlockState state) {
-		return 0;
-	}
-
-	@Override
-	public boolean isEnderTransmitter() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnderReceiver() {
-		return true;
-	}
-
-	@Override
-	public IBlockState getPoweredState(IBlockState state) {
+	public IBlockState getActiveState(IBlockState state) {
 		return state;
 	}
 
 	@Override
-	public IBlockState getUnpoweredState(IBlockState state) {
+	public IBlockState getPassiveState(IBlockState state) {
 		return state;
 	}
 
 	@Override
-	public EnumFacing getInputSide(IBlockState state) {
+	public EnumFacing getInput(IBlockState state) {
 		return null;
 	}
 
 	@Override
-	public EnumFacing getOutputSide(IBlockState state) {
+	public EnumFacing getOutput(IBlockState state) {
 		return null;
 	}
 
