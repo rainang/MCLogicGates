@@ -12,14 +12,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockRedirector extends BlockDiode {
+public class BlockDirector extends BlockDiode {
 
 	public static final PropertyInteger OUT = PropertyInteger.create("out", 0, 1);
 
 	private final EnumSignal signal;
 
-	protected BlockRedirector(EnumSignal signal, boolean powered) {
-		super(signal.name().toLowerCase() + "_redirector", powered);
+	protected BlockDirector(EnumSignal signal, boolean powered) {
+		super(signal.name().toLowerCase() + "_director", powered);
 		this.signal = signal;
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OUT, 0));
 	}
@@ -38,12 +38,12 @@ public class BlockRedirector extends BlockDiode {
 
 	@Override
 	public Block getPoweredBlock() {
-		return LogicGates.redirectors[1][signal.ordinal()];
+		return LogicGates.directors[1][signal.ordinal()];
 	}
 
 	@Override
 	public Block getUnpoweredBlock() {
-		return LogicGates.redirectors[0][signal.ordinal()];
+		return LogicGates.directors[0][signal.ordinal()];
 	}
 
 	@Override

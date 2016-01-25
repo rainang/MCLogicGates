@@ -7,8 +7,8 @@ tile.redstone_repeater_on.name=Redstone Repeater
 tile.redstone_inverter.name=Redstone Inverter
 tile.redstone_inverter_on.name=Redstone Inverter
 
-tile.redstone_redirector.name=Redstone Redirector
-tile.redstone_redirector_on.name=Redstone Redirector
+tile.redstone_director.name=Redstone Director
+tile.redstone_director_on.name=Redstone Director
 
 tile.redstone_vertical_repeater.name=Redstone Vertical Repeater
 tile.redstone_vertical_repeater_on.name=Redstone Vertical Repeater
@@ -29,8 +29,8 @@ tile.ender_repeater_on.name=Ender Repeater
 tile.ender_inverter.name=Ender Inverter
 tile.ender_inverter_on.name=Ender Inverter
 
-tile.ender_redirector.name=Redstone Redirector
-tile.ender_redirector_on.name=Redstone Redirector
+tile.ender_director.name=Ender Director
+tile.ender_director_on.name=Ender Director
 
 tile.ender_converter.name=Ender Converter
 tile.ender_converter_on.name=Ender Converter

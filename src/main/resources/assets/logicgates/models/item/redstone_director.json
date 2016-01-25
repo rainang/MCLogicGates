@@ -1,5 +1,5 @@
 {
-  "parent": "logicgates:block/ender_redirector_left",
+  "parent": "logicgates:block/redstone_director_left",
   "display": {
 	"thirdperson": {
 	  "rotation": [10, -45, 170],

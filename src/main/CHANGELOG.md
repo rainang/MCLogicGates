@@ -3,8 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- BlockRedirector to BlockDirector
+	- renamed all BlockDirector associated files
+
 ### Fixed
-- BlockRedirector displaying particles while off
+- BlockDirector displaying particles while off
 
 ## [0.9.0] - 2016-01-25
 ### Added

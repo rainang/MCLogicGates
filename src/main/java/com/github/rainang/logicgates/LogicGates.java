@@ -43,7 +43,7 @@ public class LogicGates {
 
 	public static final BlockInverter[][] inverters = new BlockInverter[2][EnumSignal.values().length];
 
-	public static final BlockRedirector[][] redirectors = new BlockRedirector[2][EnumSignal.values().length];
+	public static final BlockDirector[][] directors = new BlockDirector[2][EnumSignal.values().length];
 
 	public static final BlockVerticalRepeater[][] verticals = new BlockVerticalRepeater[2][EnumSignal.values().length];
 
@@ -55,10 +55,10 @@ public class LogicGates {
 			for(EnumSignal in : EnumSignal.values()) {
 				inverters[power][in.ordinal()] = new BlockInverter(in, power == 1);
 				verticals[power][in.ordinal()] = new BlockVerticalRepeater(in, power == 1);
-				redirectors[power][in.ordinal()] = new BlockRedirector(in, power == 1);
+				directors[power][in.ordinal()] = new BlockDirector(in, power == 1);
 				registerBlock(inverters[power][in.ordinal()]);
 				registerBlock(verticals[power][in.ordinal()]);
-				registerBlock(redirectors[power][in.ordinal()]);
+				registerBlock(directors[power][in.ordinal()]);
 				for(EnumSignal out : EnumSignal.values()) {
 					repeaters[power][in.ordinal()][out.ordinal()] = new BlockRepeater(in, out, power == 1);
 					registerBlock(repeaters[power][in.ordinal()][out.ordinal()]);
@@ -79,7 +79,7 @@ public class LogicGates {
 				for(EnumSignal in : EnumSignal.values()) {
 					registerBlockItem(inverters[power][in.ordinal()]);
 					registerBlockItem(verticals[power][in.ordinal()]);
-					registerBlockItem(redirectors[power][in.ordinal()]);
+					registerBlockItem(directors[power][in.ordinal()]);
 					for(EnumSignal out : EnumSignal.values())
 						registerBlockItem(repeaters[power][in.ordinal()][out.ordinal()]);
 				}
@@ -121,8 +121,8 @@ public class LogicGates {
 		ItemStack e_inverter = new ItemStack(Item.getItemFromBlock(inverters[0][1]));
 		ItemStack r_vertical = new ItemStack(Item.getItemFromBlock(verticals[0][0]));
 		ItemStack e_vertical = new ItemStack(Item.getItemFromBlock(verticals[0][1]));
-		ItemStack r_redirect = new ItemStack(Item.getItemFromBlock(redirectors[0][0]));
-		ItemStack e_redirect = new ItemStack(Item.getItemFromBlock(redirectors[0][1]));
+		ItemStack r_redirect = new ItemStack(Item.getItemFromBlock(directors[0][0]));
+		ItemStack e_redirect = new ItemStack(Item.getItemFromBlock(directors[0][1]));
 		ItemStack r_converter = new ItemStack(Item.getItemFromBlock(repeaters[0][0][1]));
 		ItemStack e_converter = new ItemStack(Item.getItemFromBlock(repeaters[0][1][0]));
 
