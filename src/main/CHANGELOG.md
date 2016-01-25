@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 	- renamed all BlockDirector associated files
 
 ### Fixed
+- BlockGate not transitioning to proper state on activated
 - BlockDirector displaying particles while off
 
 ## [0.9.0] - 2016-01-25

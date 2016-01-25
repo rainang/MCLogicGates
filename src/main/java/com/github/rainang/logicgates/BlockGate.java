@@ -94,8 +94,12 @@ public class BlockGate extends BlockDiode {
 		if(!playerIn.capabilities.allowEdit)
 			return false;
 		else {
-			worldIn.setBlockState(pos, LogicGates.gates[getInputSignal().ordinal()][(gate.ordinal() + 1)%
-					EnumGate.values().length].getDefaultState().withProperty(FACING, state.getValue(FACING)), 3);
+			BlockGate block = LogicGates.gates[getInputSignal().ordinal()][(gate.ordinal() + 1)%
+					EnumGate.values().length];
+			IBlockState newState = block.getDefaultState()
+					.withProperty(FACING, state.getValue(FACING))
+					.withProperty(INPUT, state.getValue(INPUT));
+			worldIn.setBlockState(pos, newState, 3);
 			return true;
 		}
 	}
