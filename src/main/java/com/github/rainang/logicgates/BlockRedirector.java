@@ -88,6 +88,8 @@ public class BlockRedirector extends BlockDiode {
 
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(!isPowered)
+			return;
 		EnumFacing enumfacing = ((EnumFacing)state.getValue(FACING)).rotateY();
 		double d0 = (double)((float)pos.getX() + 0.5F) + (double)(rand.nextFloat() - 0.5F)*0.2D;
 		double d1 = (double)((float)pos.getY() + 0.4F) + (double)(rand.nextFloat() - 0.5F)*0.2D;
