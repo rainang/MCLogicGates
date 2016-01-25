@@ -32,12 +32,24 @@ public class BlockVerticalRepeater extends BlockDiode {
 		for(EnumFacing facing : EnumFacing.VALUES) {
 			if(facing == out)
 				continue;
-			power = signal.getPowerFromSide(worldIn, pos, facing);
-			if(power > 0) {
+			if(signal == EnumSignal.REDSTONE)
+				power = signal.calculateInputStrength(worldIn, pos, facing);
+			else
+				power = signal.getPowerFromSide(worldIn, pos, facing);
+			if(power > 0)
 				return power;
-			}
 		}
 		return 0;
+	}
+
+	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
+		if(signal == EnumSignal.REDSTONE)
+			for(EnumFacing facing : EnumFacing.Plane.VERTICAL) {
+				worldIn.notifyBlockOfStateChange(pos.offset(facing), state.getBlock());
+				worldIn.notifyNeighborsOfStateExcept(pos.offset(facing), state.getBlock(), facing.getOpposite());
+			}
+		else
+			super.notifyNeighbors(worldIn, pos, state);
 	}
 
 	public boolean onBlockActivated(
