@@ -1,7 +1,0 @@
-{
-  "parent": "endereyefi:block/caster_corner",
-  "textures": {
-    "in": "endereyefi:blocks/converter_active",
-    "out": "endereyefi:blocks/caster_active"
-  }
-}

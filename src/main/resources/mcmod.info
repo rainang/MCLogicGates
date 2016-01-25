@@ -1,15 +1,15 @@
 [
 {
-  "modid": "endereyefi",
-  "name": "Ender Eye-Fi",
-  "description": "Ender powered redstone for unobstructed redstone signals!",
+  "modid": "logicgates",
+  "name": "Logic Gates",
+  "description": "Simple redstone and ender logic gates",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2588839-ender-eye-fi",
+  "url": "",
   "updateUrl": "",
   "authorList": ["RainAng"],
   "credits": "",
-  "logoFile": "endereyefilogo.gif",
+  "logoFile": "",
   "screenshots": [],
   "dependencies": []
 }

@@ -4,6 +4,38 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0] - 2016-01-25
+### Added
+- New Repeater types - all repeaters come in both redstone and ender variants
+	- Inverter
+		- inverts signal
+		- has delay toggle
+		- can be locked
+	- Converter
+		- converts signal
+		- has delay toggle
+		- can be locked
+	- Vertical
+		- sends signals vertically
+		- can receive signals from all sides except output
+		- right click to change orientation (up/down)
+	- Redirector
+		- redirects signal
+		- right click to change orientation (left/right)
+	- Gates
+		- AND
+		- OR
+		- NAND
+		- NOR
+		- XOR
+		- XNOR
+
+### Changed
+- Name to Logic Gates
+- All repeaters to new variants
+- All recipes
+- Removed all Caster Blocks
+
 ## [0.8.0] - 2016-01-19
 ### Added
 - RR Caster
