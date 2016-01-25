@@ -1,0 +1,45 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+	"particle": "logicgates:blocks/vertical_repeater_base",
+	"slab": "blocks/stone_slab_top",
+	"top": "logicgates:blocks/vertical_repeater_base"
+  },
+  "elements": [
+	{
+	  "from": [0, 0, 0],
+	  "to": [16, 2, 16],
+	  "faces": {
+		"down": { "uv": [0, 0, 16, 16], "texture": "#slab", "cullface": "down" },
+		"up": { "uv": [0, 0, 16, 16], "texture": "#top" },
+		"north": { "uv": [0, 14, 16, 16], "texture": "#slab", "cullface": "north" },
+		"south": { "uv": [0, 14, 16, 16], "texture": "#slab", "cullface": "south" },
+		"west": { "uv": [0, 14, 16, 16], "texture": "#slab", "cullface": "west" },
+		"east": { "uv": [0, 14, 16, 16], "texture": "#slab", "cullface": "east" }
+	  }
+	},
+	{
+	  "from": [7, 7, 7],
+	  "to": [9, 7, 9],
+	  "faces": {
+		"up": { "uv": [7, 6, 9, 8], "texture": "#torch" }
+	  }
+	},
+	{
+	  "from": [7, 2, 6],
+	  "to": [9, 8, 10],
+	  "faces": {
+		"west": { "uv": [6, 5, 10, 11], "texture": "#torch" },
+		"east": { "uv": [6, 5, 10, 11], "texture": "#torch" }
+	  }
+	},
+	{
+	  "from": [6, 2, 7],
+	  "to": [10, 8, 9],
+	  "faces": {
+		"north": { "uv": [6, 5, 10, 11], "texture": "#torch" },
+		"south": { "uv": [6, 5, 10, 11], "texture": "#torch" }
+	  }
+	}
+  ]
+}

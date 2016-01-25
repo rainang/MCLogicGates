@@ -1,0 +1,7 @@
+{
+  "parent": "logicgates:block/ender_or_gate_both",
+  "textures": {
+	"top": "logicgates:blocks/ender_xnor_gate",
+	"out": "logicgates:blocks/ender_torch_on"
+  }
+}

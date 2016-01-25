@@ -1,0 +1,20 @@
+{
+  "variants": {
+	"facing=north,input=0": { "model": "logicgates:ender_xnor_gate" },
+	"facing=north,input=1": { "model": "logicgates:ender_xnor_gate_left" },
+	"facing=north,input=2": { "model": "logicgates:ender_xnor_gate_right" },
+	"facing=north,input=3": { "model": "logicgates:ender_xnor_gate_both" },
+	"facing=south,input=0": { "model": "logicgates:ender_xnor_gate", "y": 180 },
+	"facing=south,input=1": { "model": "logicgates:ender_xnor_gate_left", "y": 180 },
+	"facing=south,input=2": { "model": "logicgates:ender_xnor_gate_right", "y": 180 },
+	"facing=south,input=3": { "model": "logicgates:ender_xnor_gate_both", "y": 180 },
+	"facing=west,input=0": { "model": "logicgates:ender_xnor_gate", "y": 270 },
+	"facing=west,input=1": { "model": "logicgates:ender_xnor_gate_left", "y": 270 },
+	"facing=west,input=2": { "model": "logicgates:ender_xnor_gate_right", "y": 270 },
+	"facing=west,input=3": { "model": "logicgates:ender_xnor_gate_both", "y": 270 },
+	"facing=east,input=0": { "model": "logicgates:ender_xnor_gate", "y": 90 },
+	"facing=east,input=1": { "model": "logicgates:ender_xnor_gate_left", "y": 90 },
+	"facing=east,input=2": { "model": "logicgates:ender_xnor_gate_right", "y": 90 },
+	"facing=east,input=3": { "model": "logicgates:ender_xnor_gate_both", "y": 90 }
+  }
+}

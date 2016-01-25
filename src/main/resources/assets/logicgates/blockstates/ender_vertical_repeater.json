@@ -1,0 +1,6 @@
+{
+  "variants": {
+	"facing=up": { "model": "logicgates:ender_vertical_repeater_up" },
+	"facing=down": { "model": "logicgates:ender_vertical_repeater_down" }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "logicgates:block/base/repeater_up",
+  "textures": {
+	"torch": "logicgates:blocks/ender_torch_off"
+  }
+}

@@ -1,0 +1,46 @@
+itemGroup.redstonelogic=Redstone Logic
+itemGroup.enderlogic=Ender Logic
+
+tile.redstone_repeater.name=Redstone Repeater
+tile.redstone_repeater_on.name=Redstone Repeater
+
+tile.redstone_inverter.name=Redstone Inverter
+tile.redstone_inverter_on.name=Redstone Inverter
+
+tile.redstone_redirector.name=Redstone Redirector
+tile.redstone_redirector_on.name=Redstone Redirector
+
+tile.redstone_vertical_repeater.name=Redstone Vertical Repeater
+tile.redstone_vertical_repeater_on.name=Redstone Vertical Repeater
+
+tile.redstone_converter.name=Redstone Converter
+tile.redstone_converter_on.name=Redstone Converter
+
+tile.redstone_and_gate.name=Redstone AND Gate
+tile.redstone_or_gate.name=Redstone OR Gate
+tile.redstone_nand_gate.name=Redstone NAND Gate
+tile.redstone_nor_gate.name=Redstone NOR Gate
+tile.redstone_xor_gate.name=Redstone XOR Gate
+tile.redstone_xnor_gate.name=Redstone XNOR Gate
+
+tile.ender_repeater.name=Ender Repeater
+tile.ender_repeater_on.name=Ender Repeater
+
+tile.ender_inverter.name=Ender Inverter
+tile.ender_inverter_on.name=Ender Inverter
+
+tile.ender_redirector.name=Redstone Redirector
+tile.ender_redirector_on.name=Redstone Redirector
+
+tile.ender_converter.name=Ender Converter
+tile.ender_converter_on.name=Ender Converter
+
+tile.ender_vertical_repeater.name=Ender Vertical Repeater
+tile.ender_vertical_repeater_on.name=Ender Vertical Repeater
+
+tile.ender_and_gate.name=Ender AND Gate
+tile.ender_or_gate.name=Ender OR Gate
+tile.ender_nand_gate.name=Ender NAND Gate
+tile.ender_nor_gate.name=Ender NOR Gate
+tile.ender_xor_gate.name=Ender XOR Gate
+tile.ender_xnor_gate.name=Ender XNOR Gate

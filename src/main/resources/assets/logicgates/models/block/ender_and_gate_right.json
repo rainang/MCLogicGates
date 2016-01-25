@@ -1,0 +1,6 @@
+{
+  "parent": "logicgates:block/ender_and_gate",
+  "textures": {
+	"right": "logicgates:blocks/ender_torch_on"
+  }
+}
