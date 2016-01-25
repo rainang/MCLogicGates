@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.10.0] - 2016-01-26
 ### Changed
 - BlockRedirector to BlockDirector
 	- renamed all BlockDirector associated files
