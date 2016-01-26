@@ -31,9 +31,19 @@ public enum EnumSignal implements IStringSerializable {
 		}
 
 		@Override
+		public int getPowerFromSideWithCheck(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+			Block block = worldIn.getBlockState(pos.offset(side)).getBlock();
+			if(BlockRedstoneRepeater.isRedstoneRepeaterBlockID(block) ||
+					(block instanceof IDiode && ((IDiode)block).getOutputSignal() == EnumSignal.REDSTONE))
+				return getPowerFromSide(worldIn, pos, side);
+			return 0;
+		}
+
+		@Override
 		public int getPowerFromSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
 			IBlockState offsetState = worldIn.getBlockState(pos.offset(side));
 			Block offsetBlock = offsetState.getBlock();
+
 			if(offsetBlock instanceof IDiode) {
 				IDiode diode = (IDiode)worldIn.getBlockState(pos).getBlock();
 				IDiode offsetDiode = (IDiode)offsetState.getBlock();
@@ -91,6 +101,11 @@ public enum EnumSignal implements IStringSerializable {
 		}
 
 		@Override
+		public int getPowerFromSideWithCheck(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+			return getPowerFromSide(worldIn, pos, side);
+		}
+
+		@Override
 		public int getPowerFromSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
 			IDiode diode = (IDiode)worldIn.getBlockState(pos).getBlock();
 			for(int i = 1; i < 16; i++) {
@@ -99,8 +114,7 @@ public enum EnumSignal implements IStringSerializable {
 					IDiode offsetDiode = (IDiode)offsetState.getBlock();
 					if(offsetDiode.getOutputSignal() == diode.getInputSignal())
 						return offsetDiode.isPowered(offsetState) &&
-
-									   offsetDiode.getOutput(offsetState) == side.getOpposite() ? 15 : 0;
+									   offsetDiode.getOutput(offsetState) == side.getOpposite() ? i : 0;
 				}
 			}
 			return 0;
@@ -158,6 +172,10 @@ public enum EnumSignal implements IStringSerializable {
 		return signalCalculator.calculateInputStrength(worldIn, pos, side);
 	}
 
+	public int getPowerFromSideWithCheck(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+		return signalCalculator.getPowerFromSideWithCheck(worldIn, pos, side);
+	}
+
 	public int getPowerFromSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
 		return signalCalculator.getPowerFromSide(worldIn, pos, side);
 	}
@@ -182,6 +200,8 @@ public enum EnumSignal implements IStringSerializable {
 		int calculateInputStrength(World worldIn, BlockPos pos, EnumFacing side);
 
 		int getPowerFromSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side);
+
+		int getPowerFromSideWithCheck(IBlockAccess worldIn, BlockPos pos, EnumFacing side);
 
 		BlockPos getNearestReceiver(IBlockAccess worldIn, BlockPos pos, IDiode diode);
 	}

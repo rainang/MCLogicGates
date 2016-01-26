@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 	- renamed all BlockDirector associated files
 
 ### Fixed
+- BlockRepeater locking from any redstone signal
 - BlockVerticalRepeater not powering properly
 - BlockVerticalRepeater not notifying neighbors properly
 - BlockGate not transitioning to proper state on activated

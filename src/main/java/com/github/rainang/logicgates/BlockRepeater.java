@@ -35,10 +35,9 @@ public class BlockRepeater extends BlockDiode implements IDiode {
 
 	protected int getPowerOnSides(IBlockAccess worldIn, BlockPos pos, IBlockState state) {
 		EnumFacing input = (EnumFacing)state.getValue(FACING);
-		EnumFacing left = input.rotateY();
-		EnumFacing right = input.rotateYCCW();
-		return Math.max(getInputSignal().getPowerFromSide(worldIn, pos, right),
-				getInputSignal().getPowerFromSide(worldIn, pos, left));
+		int l = getInputSignal().getPowerFromSideWithCheck(worldIn, pos, input.rotateY());
+		int r = getInputSignal().getPowerFromSideWithCheck(worldIn, pos, input.rotateYCCW());
+		return Math.max(l, r);
 	}
 
 	public boolean isFacingTowardsRepeater(World worldIn, BlockPos pos) {
