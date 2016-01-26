@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Recipes for all ender gates
+
+### Changed
+- All redstone recipes
+- Removed gate toggling
+	- each gate must now be crafted individually
 
 ## [0.10.0] - 2016-01-26
 ### Changed

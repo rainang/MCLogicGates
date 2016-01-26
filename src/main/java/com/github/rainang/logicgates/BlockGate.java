@@ -6,7 +6,6 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -86,23 +85,6 @@ public class BlockGate extends BlockDiode {
 	}
 
 	/* BLOCK OVERRIDE */
-
-	@Override
-	public boolean onBlockActivated(
-			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
-			float hitY, float hitZ) {
-		if(!playerIn.capabilities.allowEdit)
-			return false;
-		else {
-			BlockGate block = LogicGates.gates[getInputSignal().ordinal()][(gate.ordinal() + 1)%
-					EnumGate.values().length];
-			IBlockState newState = block.getDefaultState()
-					.withProperty(FACING, state.getValue(FACING))
-					.withProperty(INPUT, state.getValue(INPUT));
-			worldIn.setBlockState(pos, newState, 3);
-			return true;
-		}
-	}
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {

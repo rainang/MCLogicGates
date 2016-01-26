@@ -105,45 +105,55 @@ public class LogicGates {
 	}
 
 	private static void registerRecipes() {
-		ItemStack stone = new ItemStack(Blocks.stone, 1, BlockStone.EnumType.STONE.getMetadata());
-		ItemStack slab = new ItemStack(Blocks.stone_slab, 1, BlockStone.EnumType.STONE.getMetadata());
-
-		Block torch = Blocks.redstone_torch;
-
 		Item wire = Items.redstone;
 		Item pearl = Items.ender_pearl;
 
-		ItemStack r_repeater = new ItemStack(Item.getItemFromBlock(repeaters[0][0][0]));
-		ItemStack e_repeater = new ItemStack(Item.getItemFromBlock(repeaters[0][1][1]));
-		ItemStack r_gate = new ItemStack(Item.getItemFromBlock(gates[0][0]));
-		ItemStack e_gate = new ItemStack(Item.getItemFromBlock(gates[1][0]));
-		ItemStack r_inverter = new ItemStack(Item.getItemFromBlock(inverters[0][0]));
-		ItemStack e_inverter = new ItemStack(Item.getItemFromBlock(inverters[0][1]));
-		ItemStack r_vertical = new ItemStack(Item.getItemFromBlock(verticals[0][0]));
-		ItemStack e_vertical = new ItemStack(Item.getItemFromBlock(verticals[0][1]));
-		ItemStack r_redirect = new ItemStack(Item.getItemFromBlock(directors[0][0]));
-		ItemStack e_redirect = new ItemStack(Item.getItemFromBlock(directors[0][1]));
-		ItemStack r_converter = new ItemStack(Item.getItemFromBlock(repeaters[0][0][1]));
-		ItemStack e_converter = new ItemStack(Item.getItemFromBlock(repeaters[0][1][0]));
+		ItemStack slab = new ItemStack(Blocks.stone_slab, 1, BlockStone.EnumType.STONE.getMetadata());
 
-		GameRegistry.addShapedRecipe(r_repeater, "STS", "SWS", "STS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapelessRecipe(e_repeater, r_repeater, pearl);
+		ItemStack torch = new ItemStack(Blocks.redstone_torch);
+		ItemStack invert = new ItemStack(inverters[0][0]);
+		ItemStack vertical = new ItemStack(verticals[0][0]);
+		ItemStack direct = new ItemStack(directors[0][0]);
+		ItemStack repeat = new ItemStack(repeaters[0][0][0]);
+		ItemStack convert = new ItemStack(repeaters[0][0][1]);
+		ItemStack convert2 = new ItemStack(repeaters[0][1][0]);
 
-		GameRegistry.addShapedRecipe(r_gate, "STS", "TWT", "SSS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapelessRecipe(e_gate, r_gate, pearl);
+		ItemStack and = new ItemStack(gates[0][0]);
+		ItemStack nand = new ItemStack(gates[0][1]);
+		ItemStack or = new ItemStack(gates[0][2]);
+		ItemStack nor = new ItemStack(gates[0][3]);
+		ItemStack xor = new ItemStack(gates[0][4]);
+		ItemStack xnor = new ItemStack(gates[0][5]);
 
-		GameRegistry.addShapedRecipe(r_inverter, "STS", "SWS", "STS", 'S', slab, 'W', stone, 'T', torch);
-		GameRegistry.addShapelessRecipe(e_inverter, r_inverter, pearl);
+		/* REPEATERS */
+		GameRegistry.addShapedRecipe(repeat, "TWT", "SSS", 'S', slab, 'W', wire, 'T', torch);
+		GameRegistry.addShapedRecipe(invert, "WWT", "SSS", 'S', slab, 'W', wire, 'T', torch);
+		GameRegistry.addShapedRecipe(vertical, "WTW", "SSS", 'S', slab, 'W', wire, 'T', torch);
+		GameRegistry.addShapedRecipe(direct, "WT ", "SSS", 'S', slab, 'W', wire, 'T', torch);
 
-		GameRegistry.addShapedRecipe(r_vertical, "SWS", "WTW", "SWS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapelessRecipe(e_vertical, r_vertical, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(repeaters[0][1][1]), repeat, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(inverters[0][1]), invert, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(verticals[0][1]), vertical, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(directors[0][1]), direct, pearl);
 
-		GameRegistry.addShapedRecipe(r_redirect, "SSS", "TWS", "STS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapelessRecipe(e_redirect, r_redirect, pearl);
+		/* GATES */
+		GameRegistry.addShapedRecipe(and, " I ", "IWI", 'I', invert, 'W', wire);
+		GameRegistry.addShapedRecipe(nand, " R ", "IWI", 'I', invert, 'W', wire, 'R', repeat);
+		GameRegistry.addShapedRecipe(or, " R ", "RWR", 'W', wire, 'R', repeat);
+		GameRegistry.addShapedRecipe(nor, " I ", "RWR", 'I', invert, 'W', wire, 'R', repeat);
+		GameRegistry.addShapedRecipe(xor, "NWN", "IWI", "WAW", 'I', invert, 'W', wire, 'N', nor, 'A', and);
+		GameRegistry.addShapedRecipe(xnor, "I", "X", 'I', invert, 'X', xor);
 
-		GameRegistry.addShapedRecipe(r_converter, "SPS", "SWS", "STS", 'S', slab, 'W', wire, 'T', torch, 'P', pearl);
-		GameRegistry.addShapedRecipe(e_converter, "STS", "SWS", "SPS", 'S', slab, 'W', wire, 'T', torch, 'P', pearl);
-		GameRegistry.addShapelessRecipe(e_converter, r_converter);
-		GameRegistry.addShapelessRecipe(r_converter, e_converter);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][0]), and, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][1]), nand, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][2]), or, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][3]), nor, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][4]), xor, pearl);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][5]), xnor, pearl);
+
+		/* CONVERTERS */
+		GameRegistry.addShapedRecipe(convert, "TWP", "SSS", 'S', slab, 'W', wire, 'T', torch, 'P', pearl);
+		GameRegistry.addShapelessRecipe(convert, convert2);
+		GameRegistry.addShapelessRecipe(convert2, convert);
 	}
 }
