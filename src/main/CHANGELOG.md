@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - All redstone recipes
 - Removed gate toggling
 	- each gate must now be crafted individually
+	
+### Fixed
+- BlockRepeater locking from any redstone signal
 
 ## [0.10.0] - 2016-01-26
 ### Changed
@@ -17,7 +20,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 	- renamed all BlockDirector associated files
 
 ### Fixed
-- BlockRepeater locking from any redstone signal
 - BlockVerticalRepeater not powering properly
 - BlockVerticalRepeater not notifying neighbors properly
 - BlockGate not transitioning to proper state on activated
