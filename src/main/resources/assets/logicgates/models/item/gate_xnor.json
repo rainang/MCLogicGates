@@ -1,0 +1,6 @@
+{
+  "parent": "logicgates:item/gate_buffer",
+  "textures": {
+	"layer0": "logicgates:items/gate_xnor"
+  }
+}

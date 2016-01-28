@@ -1,0 +1,6 @@
+{
+  "parent": "logicgates:block/diode2in_or_23",
+  "textures": {
+	"signal_c": "logicgates:blocks/redstone_off"
+  }
+}

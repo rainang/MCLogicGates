@@ -1,0 +1,20 @@
+{
+  "variants": {
+	"input=0": { "model": "logicgates:ender_diode5in_0_0" },
+	"input=1": { "model": "logicgates:ender_diode5in_0_1" },
+	"input=2": { "model": "logicgates:ender_diode5in_0_2" },
+	"input=3": { "model": "logicgates:ender_diode5in_0_3" },
+	"input=4": { "model": "logicgates:ender_diode5in_0_4" },
+	"input=5": { "model": "logicgates:ender_diode5in_0_5" },
+	"input=6": { "model": "logicgates:ender_diode5in_0_6" },
+	"input=7": { "model": "logicgates:ender_diode5in_0_7" },
+	"input=8": { "model": "logicgates:ender_diode5in_0_8" },
+	"input=9": { "model": "logicgates:ender_diode5in_0_9" },
+	"input=10": { "model": "logicgates:ender_diode5in_0_10" },
+	"input=11": { "model": "logicgates:ender_diode5in_0_11" },
+	"input=12": { "model": "logicgates:ender_diode5in_0_12" },
+	"input=13": { "model": "logicgates:ender_diode5in_0_13" },
+	"input=14": { "model": "logicgates:ender_diode5in_0_14" },
+	"input=15": { "model": "logicgates:ender_diode5in_0_15" }
+  }
+}

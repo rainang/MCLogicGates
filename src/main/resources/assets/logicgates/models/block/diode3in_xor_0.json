@@ -1,0 +1,11 @@
+{
+  "parent": "logicgates:block/base/diode3in",
+  "textures": {
+	"symbol": "logicgates:blocks/xor",
+	"signal_a": "logicgates:blocks/redstone_off",
+	"signal_b": "logicgates:blocks/redstone_off",
+	"signal_c": "logicgates:blocks/redstone_off",
+	"signal_center": "logicgates:blocks/redstone_off",
+	"out": "blocks/redstone_torch_off"
+  }
+}

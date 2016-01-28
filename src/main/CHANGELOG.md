@@ -3,16 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.11.0] - 2016-01-28
 ### Added
-- Recipes for all ender gates
+- Basic gate crafting items (BUFFER, NOT, AND, OR, XOR, NAND, NOR, XNOR)
+- Input toggle for 1-2 input logic gates
+- 3 input logic gates
+- 5 input vertical repeater
+- New textures
 
 ### Changed
-- All redstone recipes
-- Removed gate toggling
-	- each gate must now be crafted individually
-	
-### Fixed
-- BlockRepeater locking from any redstone signal
+- All recipes to use new crafting items
+- Removed delay toggle (may create a diode of its own)
+- Removed locking (may be brought back later)
 
 ## [0.10.0] - 2016-01-26
 ### Changed

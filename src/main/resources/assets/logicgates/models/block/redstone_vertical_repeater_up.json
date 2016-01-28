@@ -1,6 +1,0 @@
-{
-  "parent": "logicgates:block/base/repeater_up",
-  "textures": {
-	"torch": "blocks/redstone_torch_off"
-  }
-}

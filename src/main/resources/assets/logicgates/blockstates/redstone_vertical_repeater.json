@@ -1,6 +1,0 @@
-{
-  "variants": {
-	"facing=up": { "model": "logicgates:redstone_vertical_repeater_up" },
-	"facing=down": { "model": "logicgates:redstone_vertical_repeater_down" }
-  }
-}

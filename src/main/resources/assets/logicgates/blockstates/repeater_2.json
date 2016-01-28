@@ -1,0 +1,20 @@
+{
+  "variants": {
+	"input=0,out=north,signal=redstone": { "model": "logicgates:repeater_2" },
+	"input=0,out=east,signal=redstone": { "model": "logicgates:repeater_2", "y": 90 },
+	"input=0,out=south,signal=redstone": { "model": "logicgates:repeater_2", "y": 180 },
+	"input=0,out=west,signal=redstone": { "model": "logicgates:repeater_2", "y": 270 },
+	"input=1,out=north,signal=redstone": { "model": "logicgates:repeater_2_on" },
+	"input=1,out=east,signal=redstone": { "model": "logicgates:repeater_2_on", "y": 90 },
+	"input=1,out=south,signal=redstone": { "model": "logicgates:repeater_2_on", "y": 180 },
+	"input=1,out=west,signal=redstone": { "model": "logicgates:repeater_2_on", "y": 270 },
+	"input=0,out=north,signal=ender": { "model": "logicgates:ender_repeater_2" },
+	"input=0,out=east,signal=ender": { "model": "logicgates:ender_repeater_2", "y": 90 },
+	"input=0,out=south,signal=ender": { "model": "logicgates:ender_repeater_2", "y": 180 },
+	"input=0,out=west,signal=ender": { "model": "logicgates:ender_repeater_2", "y": 270 },
+	"input=1,out=north,signal=ender": { "model": "logicgates:ender_repeater_2_on" },
+	"input=1,out=east,signal=ender": { "model": "logicgates:ender_repeater_2_on", "y": 90 },
+	"input=1,out=south,signal=ender": { "model": "logicgates:ender_repeater_2_on", "y": 180 },
+	"input=1,out=west,signal=ender": { "model": "logicgates:ender_repeater_2_on", "y": 270 }
+  }
+}

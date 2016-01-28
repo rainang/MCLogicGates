@@ -1,0 +1,10 @@
+{
+  "parent": "logicgates:block/ender_diode3in_and_0",
+  "textures": {
+	"signal_a": "logicgates:blocks/ender_on",
+	"signal_b": "logicgates:blocks/ender_on",
+	"signal_c": "logicgates:blocks/ender_on",
+	"signal_center": "logicgates:blocks/ender_on",
+	"out": "logicgates:blocks/ender_torch_on"
+  }
+}

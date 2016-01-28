@@ -1,0 +1,20 @@
+{
+  "variants": {
+	"input=0,out=north": { "model": "logicgates:diode2in_nor_20" },
+	"input=0,out=east": { "model": "logicgates:diode2in_nor_20", "y": 90 },
+	"input=0,out=south": { "model": "logicgates:diode2in_nor_20", "y": 180 },
+	"input=0,out=west": { "model": "logicgates:diode2in_nor_20", "y": 270 },
+	"input=1,out=north": { "model": "logicgates:diode2in_nor_21" },
+	"input=1,out=east": { "model": "logicgates:diode2in_nor_21", "y": 90 },
+	"input=1,out=south": { "model": "logicgates:diode2in_nor_21", "y": 180 },
+	"input=1,out=west": { "model": "logicgates:diode2in_nor_21", "y": 270 },
+	"input=2,out=north": { "model": "logicgates:diode2in_nor_22" },
+	"input=2,out=east": { "model": "logicgates:diode2in_nor_22", "y": 90 },
+	"input=2,out=south": { "model": "logicgates:diode2in_nor_22", "y": 180 },
+	"input=2,out=west": { "model": "logicgates:diode2in_nor_22", "y": 270 },
+	"input=3,out=north": { "model": "logicgates:diode2in_nor_23" },
+	"input=3,out=east": { "model": "logicgates:diode2in_nor_23", "y": 90 },
+	"input=3,out=south": { "model": "logicgates:diode2in_nor_23", "y": 180 },
+	"input=3,out=west": { "model": "logicgates:diode2in_nor_23", "y": 270 }
+  }
+}

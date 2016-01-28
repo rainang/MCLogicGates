@@ -1,7 +1,0 @@
-{
-  "parent": "logicgates:block/redstone_and_gate_left",
-  "textures": {
-	"top": "logicgates:blocks/redstone_nand_gate",
-	"out": "blocks/redstone_torch_on"
-  }
-}

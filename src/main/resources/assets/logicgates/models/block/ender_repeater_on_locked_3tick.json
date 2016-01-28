@@ -1,7 +1,0 @@
-{
-  "parent": "logicgates:block/base/repeater_locked_3tick",
-  "textures": {
-	"top": "logicgates:blocks/ender_repeater_on",
-	"out": "logicgates:blocks/ender_torch_on"
-  }
-}

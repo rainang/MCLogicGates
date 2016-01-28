@@ -1,0 +1,6 @@
+{
+  "parent": "logicgates:block/ender_diode2in_nor_23",
+  "textures": {
+	"signal_c": "logicgates:blocks/ender_off"
+  }
+}

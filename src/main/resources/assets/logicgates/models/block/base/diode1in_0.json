@@ -1,0 +1,10 @@
+{
+  "parent": "logicgates:block/base/diode",
+  "textures": {
+	"base_c": "logicgates:blocks/gate_base",
+	"center": "logicgates:blocks/gate_base",
+
+	"signal_c": "#in",
+	"signal_center": "#in"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "logicgates:block/base/diode",
+  "textures": {
+	"symbol": "logicgates:blocks/gate_base",
+	"base_a": "logicgates:blocks/gate_base",
+	"base_b": "logicgates:blocks/gate_base",
+	"base_c": "logicgates:blocks/gate_base",
+	"center": "logicgates:blocks/gate_base"
+  }
+}

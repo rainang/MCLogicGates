@@ -1,8 +1,16 @@
 package com.github.rainang.logicgates;
 
+import com.github.rainang.logicgates.block.BlockDiode;
+import com.github.rainang.logicgates.diode.DiodeFactory;
+import com.github.rainang.logicgates.diode.Gate;
+import com.github.rainang.logicgates.item.ItemDiode1In;
+import com.github.rainang.logicgates.item.ItemGate;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -24,136 +32,260 @@ public class LogicGates {
 	public static final String MCVERSION = "@mcversion@";
 	public static final String VERSION   = "@version@";
 
-	protected static final CreativeTabs TAB_REDSTONE = new CreativeTabs("redstonelogic") {
+	public static final CreativeTabs TAB_GATES = new CreativeTabs("logicgates") {
 		@Override
 		public Item getTabIconItem() {
-			return repeaters[0][0][0].getItem(null, null);
+			return Item.getItemFromBlock(gates3_and[0]);
 		}
 	};
 
-	protected static final CreativeTabs TAB_ENDER = new CreativeTabs("enderlogic") {
-		@Override
-		public Item getTabIconItem() {
-			return repeaters[0][1][1].getItem(null, null);
-		}
-	};
+	public static final BlockDiode[] repeaters  = DiodeFactory.create1InputDiode("repeater", Gate.BUFFER);
+	public static final BlockDiode[] inverters  = DiodeFactory.create1InputDiode("inverter", Gate.NOT);
+	public static final BlockDiode[] converters = DiodeFactory.createConverterDiode();
 
-	public static final BlockRepeater[][][] repeaters
-			= new BlockRepeater[2][EnumSignal.values().length][EnumSignal.values().length];
+	public static final BlockDiode[] gates_and  = DiodeFactory.create2InputDiode("and", Gate.AND);
+	public static final BlockDiode[] gates_or   = DiodeFactory.create2InputDiode("or", Gate.OR);
+	public static final BlockDiode[] gates_xor  = DiodeFactory.create2InputDiode("xor", Gate.XOR);
+	public static final BlockDiode[] gates_nand = DiodeFactory.create2InputDiode("nand", Gate.NAND);
+	public static final BlockDiode[] gates_nor  = DiodeFactory.create2InputDiode("nor", Gate.NOR);
+	public static final BlockDiode[] gates_xnor = DiodeFactory.create2InputDiode("xnor", Gate.XNOR);
 
-	public static final BlockInverter[][] inverters = new BlockInverter[2][EnumSignal.values().length];
+	public static final BlockDiode[] gates3_and  = DiodeFactory.create3InputDiode("and", Gate.AND);
+	public static final BlockDiode[] gates3_or   = DiodeFactory.create3InputDiode("or", Gate.OR);
+	public static final BlockDiode[] gates3_xor  = DiodeFactory.create3InputDiode("xor", Gate.XOR);
+	public static final BlockDiode[] gates3_nand = DiodeFactory.create3InputDiode("nand", Gate.NAND);
+	public static final BlockDiode[] gates3_nor  = DiodeFactory.create3InputDiode("nor", Gate.NOR);
+	public static final BlockDiode[] gates3_xnor = DiodeFactory.create3InputDiode("xnor", Gate.XNOR);
 
-	public static final BlockDirector[][] directors = new BlockDirector[2][EnumSignal.values().length];
+	public static final BlockDiode[] verticals = DiodeFactory.create5InputDiode();
 
-	public static final BlockVerticalRepeater[][] verticals = new BlockVerticalRepeater[2][EnumSignal.values().length];
-
-	public static final BlockGate[][] gates = new BlockGate[EnumSignal.values().length][EnumGate.values().length];
+	public static final ItemGate item_gate = new ItemGate();
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		for(int power = 0; power < repeaters.length; power++)
-			for(EnumSignal in : EnumSignal.values()) {
-				inverters[power][in.ordinal()] = new BlockInverter(in, power == 1);
-				verticals[power][in.ordinal()] = new BlockVerticalRepeater(in, power == 1);
-				directors[power][in.ordinal()] = new BlockDirector(in, power == 1);
-				registerBlock(inverters[power][in.ordinal()]);
-				registerBlock(verticals[power][in.ordinal()]);
-				registerBlock(directors[power][in.ordinal()]);
-				for(EnumSignal out : EnumSignal.values()) {
-					repeaters[power][in.ordinal()][out.ordinal()] = new BlockRepeater(in, out, power == 1);
-					registerBlock(repeaters[power][in.ordinal()][out.ordinal()]);
-				}
-			}
+		registerItem(item_gate);
 
-		for(EnumSignal sig : EnumSignal.values())
-			for(EnumGate gate : EnumGate.values()) {
-				gates[sig.ordinal()][gate.ordinal()] = new BlockGate(sig, gate);
-				registerBlock(gates[sig.ordinal()][gate.ordinal()]);
-			}
+		for(BlockDiode diode : inverters)
+			GameRegistry.registerBlock(diode, ItemDiode1In.class, diode.getUnlocalizedName().substring(5));
+		for(BlockDiode diode : repeaters)
+			GameRegistry.registerBlock(diode, ItemDiode1In.class, diode.getUnlocalizedName().substring(5));
+		for(BlockDiode diode : converters)
+			GameRegistry.registerBlock(diode, ItemDiode1In.class, diode.getUnlocalizedName().substring(5));
+
+		for(BlockDiode diode : gates_and)
+			registerBlock(diode);
+		for(BlockDiode diode : gates_or)
+			registerBlock(diode);
+		for(BlockDiode diode : gates_xor)
+			registerBlock(diode);
+		for(BlockDiode diode : gates_nand)
+			registerBlock(diode);
+		for(BlockDiode diode : gates_nor)
+			registerBlock(diode);
+		for(BlockDiode diode : gates_xnor)
+			registerBlock(diode);
+
+		for(BlockDiode diode : gates3_and)
+			registerBlock(diode);
+		for(BlockDiode diode : gates3_or)
+			registerBlock(diode);
+		for(BlockDiode diode : gates3_xor)
+			registerBlock(diode);
+		for(BlockDiode diode : gates3_nand)
+			registerBlock(diode);
+		for(BlockDiode diode : gates3_nor)
+			registerBlock(diode);
+		for(BlockDiode diode : gates3_xnor)
+			registerBlock(diode);
+
+		for(BlockDiode diode : verticals)
+			registerBlock(diode);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		if(event.getSide() == Side.CLIENT) {
-			for(int power = 0; power < repeaters.length; power++)
-				for(EnumSignal in : EnumSignal.values()) {
-					registerBlockItem(inverters[power][in.ordinal()]);
-					registerBlockItem(verticals[power][in.ordinal()]);
-					registerBlockItem(directors[power][in.ordinal()]);
-					for(EnumSignal out : EnumSignal.values())
-						registerBlockItem(repeaters[power][in.ordinal()][out.ordinal()]);
-				}
+		registerItemRender(item_gate);
 
-			for(EnumSignal sig : EnumSignal.values())
-				for(EnumGate gate : EnumGate.values())
-					registerBlockItem(gates[sig.ordinal()][gate.ordinal()]);
-		}
+		for(BlockDiode diode : repeaters)
+			registerItemRender(diode);
+		for(BlockDiode diode : inverters)
+			registerItemRender(diode);
+		for(BlockDiode diode : converters)
+			registerItemRender(diode);
+
+		for(BlockDiode diode : gates_and)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates_or)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates_xor)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates_nand)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates_nor)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates_xnor)
+			registerItemRender(diode);
+
+		for(BlockDiode diode : gates3_and)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates3_or)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates3_xor)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates3_nand)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates3_nor)
+			registerItemRender(diode);
+		for(BlockDiode diode : gates3_xnor)
+			registerItemRender(diode);
+
+		for(BlockDiode diode : verticals)
+			registerItemRender(diode);
+
 		registerRecipes();
 	}
 
 	private static void registerBlock(Block block) {
-		String name = block.getUnlocalizedName().substring(5);
-		GameRegistry.registerBlock(block, name);
+		GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
+	}
+
+	private static void registerItem(Item item) {
+		if(item.getHasSubtypes())
+			GameRegistry.registerItem(item, item.getUnlocalizedName(new ItemStack(item, 1, 0)).substring(5));
+		else
+			GameRegistry.registerItem(item, item.getUnlocalizedName().substring(5));
 	}
 
 	@SideOnly(Side.CLIENT)
-	private static void registerBlockItem(Block block) {
-		Item item = Item.getItemFromBlock(block);
-		ModelResourceLocation mrl = new ModelResourceLocation(
-				LogicGates.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory");
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, mrl);
+	private static void registerItemRender(Block block) {
+		registerItemRender(Item.getItemFromBlock(block));
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerItemRender(Item item) {
+		if(item.getHasSubtypes()) {
+			List<ItemStack> list = new ArrayList<ItemStack>();
+			item.getSubItems(item, null, list);
+			for(ItemStack stack : list)
+				registerItemRender(stack);
+		} else {
+			ModelResourceLocation mrl = new ModelResourceLocation(
+					LogicGates.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory");
+			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, mrl);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerItemRender(ItemStack stack) {
+		String name = stack.getItem().getUnlocalizedName(stack).substring(5);
+		ModelResourceLocation mrl = new ModelResourceLocation(LogicGates.MODID + ":" + name, "inventory");
+		Minecraft.getMinecraft()
+				.getRenderItem()
+				.getItemModelMesher()
+				.register(stack.getItem(), stack.getItemDamage(), mrl);
+		ModelBakery.addVariantName(stack.getItem(), LogicGates.MODID + ":" + name);
 	}
 
 	private static void registerRecipes() {
 		Item wire = Items.redstone;
-		Item pearl = Items.ender_pearl;
+		Item p = Items.ender_pearl;
 
 		ItemStack slab = new ItemStack(Blocks.stone_slab, 1, BlockStone.EnumType.STONE.getMetadata());
 
 		ItemStack torch = new ItemStack(Blocks.redstone_torch);
-		ItemStack invert = new ItemStack(inverters[0][0]);
-		ItemStack vertical = new ItemStack(verticals[0][0]);
-		ItemStack direct = new ItemStack(directors[0][0]);
-		ItemStack repeat = new ItemStack(repeaters[0][0][0]);
-		ItemStack convert = new ItemStack(repeaters[0][0][1]);
-		ItemStack convert2 = new ItemStack(repeaters[0][1][0]);
+		ItemStack invert = new ItemStack(inverters[0]);
+		ItemStack vertical = new ItemStack(verticals[0]);
+		ItemStack repeat = new ItemStack(repeaters[0]);
 
-		ItemStack and = new ItemStack(gates[0][0]);
-		ItemStack nand = new ItemStack(gates[0][1]);
-		ItemStack or = new ItemStack(gates[0][2]);
-		ItemStack nor = new ItemStack(gates[0][3]);
-		ItemStack xor = new ItemStack(gates[0][4]);
-		ItemStack xnor = new ItemStack(gates[0][5]);
-
-		/* REPEATERS */
-		GameRegistry.addShapedRecipe(repeat, "TWT", "SSS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapedRecipe(invert, "WWT", "SSS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapedRecipe(vertical, "WTW", "SSS", 'S', slab, 'W', wire, 'T', torch);
-		GameRegistry.addShapedRecipe(direct, "WT ", "SSS", 'S', slab, 'W', wire, 'T', torch);
-
-		GameRegistry.addShapelessRecipe(new ItemStack(repeaters[0][1][1]), repeat, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(inverters[0][1]), invert, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(verticals[0][1]), vertical, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(directors[0][1]), direct, pearl);
+		ItemStack buffer = new ItemStack(item_gate, 1, 0);
+		ItemStack not = new ItemStack(item_gate, 1, 1);
+		ItemStack and = new ItemStack(item_gate, 1, 2);
+		ItemStack or = new ItemStack(item_gate, 1, 3);
+		ItemStack xor = new ItemStack(item_gate, 1, 4);
+		ItemStack nand = new ItemStack(item_gate, 1, 5);
+		ItemStack nor = new ItemStack(item_gate, 1, 6);
+		ItemStack xnor = new ItemStack(item_gate, 1, 7);
 
 		/* GATES */
-		GameRegistry.addShapedRecipe(and, " I ", "IWI", 'I', invert, 'W', wire);
-		GameRegistry.addShapedRecipe(nand, " R ", "IWI", 'I', invert, 'W', wire, 'R', repeat);
-		GameRegistry.addShapedRecipe(or, " R ", "RWR", 'W', wire, 'R', repeat);
-		GameRegistry.addShapedRecipe(nor, " I ", "RWR", 'I', invert, 'W', wire, 'R', repeat);
-		GameRegistry.addShapedRecipe(xor, "NWN", "IWI", "WAW", 'I', invert, 'W', wire, 'N', nor, 'A', and);
-		GameRegistry.addShapedRecipe(xnor, "I", "X", 'I', invert, 'X', xor);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][0]), and, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][1]), nand, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][2]), or, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][3]), nor, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][4]), xor, pearl);
-		GameRegistry.addShapelessRecipe(new ItemStack(gates[1][5]), xnor, pearl);
+		GameRegistry.addShapedRecipe(buffer, "W", "S", 'W', wire, 'S', slab);
+		GameRegistry.addShapedRecipe(not, "T", "S", 'T', torch, 'S', slab);
+		GameRegistry.addShapedRecipe(and, " N ", "NWN", 'N', not, 'W', wire);
+		GameRegistry.addShapedRecipe(nand, " B ", "NWN", 'N', not, 'W', wire, 'B', buffer);
+		GameRegistry.addShapedRecipe(or, " B ", "BWB", 'W', wire, 'B', buffer);
+		GameRegistry.addShapedRecipe(nor, " N ", "BWB", 'W', wire, 'N', not, 'B', buffer);
+		GameRegistry.addShapedRecipe(xor, "OBO", "NWN", "WAW", 'N', not, 'W', wire, 'O', nor, 'A', and, 'B', buffer);
+		GameRegistry.addShapedRecipe(xor, "ONO", "NWN", "WAW", 'N', not, 'W', wire, 'O', nor, 'A', and);
+
+		GameRegistry.addShapelessRecipe(not, buffer, not);
+		GameRegistry.addShapelessRecipe(buffer, not, not);
+		GameRegistry.addShapelessRecipe(nand, and, not);
+		GameRegistry.addShapelessRecipe(nor, or, not);
+		GameRegistry.addShapelessRecipe(xnor, xor, not);
+		GameRegistry.addShapelessRecipe(and, nand, not);
+		GameRegistry.addShapelessRecipe(or, nor, not);
+		GameRegistry.addShapelessRecipe(xor, xnor, not);
+		
+		/* DIODES */
+
+		GameRegistry.addShapedRecipe(repeat, "SGS", "SWS", "SWS", 'G', buffer, 'S', slab, 'W', wire);
+		GameRegistry.addShapedRecipe(invert, "SGS", "SWS", "SWS", 'G', not, 'S', slab, 'W', wire);
+		GameRegistry.addShapedRecipe(vertical, "SWS", "WGW", "SWS", 'G', buffer, 'S', slab, 'W', wire);
+
+		GameRegistry.addShapedRecipe(new ItemStack(gates_and[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', and);
+		GameRegistry.addShapedRecipe(new ItemStack(gates_or[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
+				buffer,
+				'G', or);
+		GameRegistry.addShapedRecipe(new ItemStack(gates_xor[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', xor);
+		GameRegistry.addShapedRecipe(new ItemStack(gates_nand[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', nand);
+		GameRegistry.addShapedRecipe(new ItemStack(gates_nor[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', nor);
+		GameRegistry.addShapedRecipe(new ItemStack(gates_xnor[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', xnor);
+
+		GameRegistry.addShapedRecipe(new ItemStack(gates3_and[0]), "SBS", "WGW", "SWS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', and);
+		GameRegistry.addShapedRecipe(new ItemStack(gates3_or[0]), "SBS", "WGW", "SWS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', or);
+		GameRegistry.addShapedRecipe(new ItemStack(gates3_xor[0]), "SBS", "WGW", "SWS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', xor);
+		GameRegistry.addShapedRecipe(new ItemStack(gates3_nand[0]), "SBS", "WGW", "SWS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', nand);
+		GameRegistry.addShapedRecipe(new ItemStack(gates3_nor[0]), "SBS", "WGW", "SWS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', nor);
+		GameRegistry.addShapedRecipe(new ItemStack(gates3_xnor[0]), "SBS", "WGW", "SWS", 'S', slab, 'W', wire, 'B',
+				buffer, 'G', xnor);
+
+		/* ENDER */
+
+		GameRegistry.addShapelessRecipe(new ItemStack(repeaters[0], 1, 8), repeat, p);
+		GameRegistry.addShapelessRecipe(new ItemStack(inverters[0], 1, 8), invert, p);
+		GameRegistry.addShapelessRecipe(new ItemStack(verticals[0], 1, 8), vertical, p);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(gates_and[4]), gates_and[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates_or[4]), gates_or[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates_xor[4]), gates_xor[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates_nand[4]), gates_nand[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates_nor[4]), gates_nor[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates_xnor[4]), gates_xnor[0], p);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(gates3_and[2]), gates3_and[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates3_or[2]), gates3_or[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates3_xor[2]), gates3_xor[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates3_nand[2]), gates3_nand[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates3_nor[2]), gates3_nor[0], p);
+		GameRegistry.addShapelessRecipe(new ItemStack(gates3_xnor[2]), gates3_xnor[0], p);
 
 		/* CONVERTERS */
-		GameRegistry.addShapedRecipe(convert, "TWP", "SSS", 'S', slab, 'W', wire, 'T', torch, 'P', pearl);
-		GameRegistry.addShapelessRecipe(convert, convert2);
-		GameRegistry.addShapelessRecipe(convert2, convert);
+
+		GameRegistry.addShapedRecipe(new ItemStack(converters[0], 1, 0), "SPS", "SWS", "SBS", 'B', buffer, 'S', slab,
+				'W', wire, 'P', p);
+		GameRegistry.addShapedRecipe(new ItemStack(converters[0], 1, 8), "SBS", "SWS", "SPS", 'B', buffer, 'S', slab,
+				'W', wire, 'P', p);
+		GameRegistry.addShapelessRecipe(new ItemStack(converters[0], 1, 0), new ItemStack(converters[0], 1, 8));
+		GameRegistry.addShapelessRecipe(new ItemStack(converters[0], 1, 8), new ItemStack(converters[0], 1, 0));
 	}
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "logicgates:block/base/diode1in_1",
+  "textures": {
+	"in": "logicgates:blocks/redstone_off",
+	"out": "blocks/redstone_torch_on"
+  }
+}

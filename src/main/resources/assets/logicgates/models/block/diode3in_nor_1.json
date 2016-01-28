@@ -1,0 +1,8 @@
+{
+  "parent": "logicgates:block/diode3in_nor_0",
+  "textures": {
+	"signal_a": "logicgates:blocks/redstone_on",
+	"signal_center": "logicgates:blocks/redstone_on",
+	"out": "blocks/redstone_torch_off"
+  }
+}

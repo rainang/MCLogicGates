@@ -1,6 +1,0 @@
-{
-  "parent": "logicgates:block/base/gate",
-  "textures": {
-	"top": "logicgates:blocks/redstone_or_gate"
-  }
-}
