@@ -38,6 +38,8 @@ public abstract class BlockDiode extends Block {
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
 	}
 
+	public abstract BlockDiode getBaseBlock();
+
 	public abstract Signal getSignal(IBlockState state);
 
 	public boolean isActive(IBlockState state) {
@@ -270,13 +272,13 @@ public abstract class BlockDiode extends Block {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(setInputState(state, 0).getBlock());
+		return Item.getItemFromBlock(getBaseBlock());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World worldIn, BlockPos pos) {
-		return Item.getItemFromBlock(setInputState(worldIn.getBlockState(pos), 0).getBlock());
+		return Item.getItemFromBlock(getBaseBlock());
 	}
 
 	@Override

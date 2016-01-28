@@ -12,6 +12,11 @@ public class DiodeFactory {
 			final int j = (i + 1)%3;
 			diodes[i] = new BlockDiode1In(gate, i) {
 				@Override
+				public BlockDiode getBaseBlock() {
+					return diodes[0];
+				}
+
+				@Override
 				public IBlockState rotate(IBlockState state) {
 					return diodes[j].getDefaultState()
 							.withProperty(OUT, state.getValue(OUT))
@@ -32,6 +37,11 @@ public class DiodeFactory {
 			final int j = (i + 1)%3;
 			diodes[i] = new BlockDiodeConverter(Gate.BUFFER, i) {
 				@Override
+				public BlockDiode getBaseBlock() {
+					return diodes[0];
+				}
+
+				@Override
 				public IBlockState rotate(IBlockState state) {
 					return diodes[j].getDefaultState()
 							.withProperty(OUT, state.getValue(OUT))
@@ -48,10 +58,15 @@ public class DiodeFactory {
 
 	public static BlockDiode[] create2InputDiode(String name, Gate gate) {
 		final BlockDiode[] diodes = new BlockDiode[6];
-		for(Signal signal : Signal.values())
+		for(final Signal signal : Signal.values())
 			for(int i = 0, j = signal.ordinal()*3 + i; i < 3; i++, j = signal.ordinal()*3 + i) {
 				final int k = signal.ordinal()*3 + (i + 1)%3;
 				diodes[j] = new BlockDiode2In(signal, gate, i) {
+					@Override
+					public BlockDiode getBaseBlock() {
+						return diodes[signal.ordinal()*3];
+					}
+
 					@Override
 					public IBlockState rotate(IBlockState state) {
 						return diodes[k].getDefaultState()
@@ -69,11 +84,16 @@ public class DiodeFactory {
 
 	public static BlockDiode[] create3InputDiode(String name, Gate gate) {
 		final BlockDiode[] diodes = new BlockDiode[4];
-		for(Signal signal : Signal.values())
+		for(final Signal signal : Signal.values())
 			for(int i = 0; i < 2; i++) {
 				final int j = signal.ordinal()*2 + i;
 				if(i == 0)
 					diodes[j] = new BlockDiode3In(signal, gate, i) {
+						@Override
+						public BlockDiode getBaseBlock() {
+							return diodes[signal.ordinal()*2];
+						}
+
 						@Override
 						public IBlockState setInputState(IBlockState state, int input) {
 							if(input < 4)
@@ -85,6 +105,11 @@ public class DiodeFactory {
 					};
 				else
 					diodes[j] = new BlockDiode3In(signal, gate, i) {
+						@Override
+						public BlockDiode getBaseBlock() {
+							return diodes[signal.ordinal()*2];
+						}
+
 						@Override
 						public IBlockState setInputState(IBlockState state, int input) {
 							if(input >= 4)
@@ -104,11 +129,16 @@ public class DiodeFactory {
 
 	public static BlockDiode[] create5InputDiode() {
 		final BlockDiode[] diodes = new BlockDiode[4];
-		for(Signal signal : Signal.values())
+		for(final Signal signal : Signal.values())
 			for(int i = 0; i < 2; i++) {
 				final int j = signal.ordinal()*2 + i;
 				if(i == 0)
 					diodes[j] = new BlockDiode5In(signal, false) {
+						@Override
+						public BlockDiode getBaseBlock() {
+							return diodes[signal.ordinal()*2];
+						}
+
 						@Override
 						public IBlockState rotate(IBlockState state) {
 							return diodes[j + 1].getDefaultState().withProperty(INPUT, state.getValue(INPUT));
@@ -116,6 +146,11 @@ public class DiodeFactory {
 					};
 				else
 					diodes[j] = new BlockDiode5In(signal, true) {
+						@Override
+						public BlockDiode getBaseBlock() {
+							return diodes[signal.ordinal()*2];
+						}
+
 						@Override
 						public IBlockState rotate(IBlockState state) {
 							return diodes[j - 1].getDefaultState().withProperty(INPUT, state.getValue(INPUT));

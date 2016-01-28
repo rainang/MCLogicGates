@@ -83,9 +83,15 @@ public abstract class BlockDiode1In extends BlockDiode {
 		return i;
 	}
 
+	@SuppressWarnings("unchecked")
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
 		list.add(new ItemStack(itemIn, 1, 0));
 		list.add(new ItemStack(itemIn, 1, 8));
+	}
+
+	@Override
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state) < 8 ? 0 : 8;
 	}
 }
