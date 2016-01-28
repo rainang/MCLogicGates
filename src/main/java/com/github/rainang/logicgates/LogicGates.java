@@ -104,6 +104,11 @@ public class LogicGates {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		registerRecipes();
+
+		if(event.getSide() == Side.SERVER)
+			return;
+
 		registerItemRender(item_gate);
 
 		for(BlockDiode diode : repeaters)
@@ -141,8 +146,6 @@ public class LogicGates {
 
 		for(BlockDiode diode : verticals)
 			registerItemRender(diode);
-
-		registerRecipes();
 	}
 
 	private static void registerBlock(Block block) {

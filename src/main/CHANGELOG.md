@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.1] - 2016-01-28
+### Fixed
+- Registering item render on wrong side
+
 ## [0.11.0] - 2016-01-28
 ### Added
 - Basic gate crafting items (BUFFER, NOT, AND, OR, XOR, NAND, NOR, XNOR)
