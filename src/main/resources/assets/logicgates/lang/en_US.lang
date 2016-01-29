@@ -1,4 +1,4 @@
-itemGroup.logicgates=Ender Logic
+itemGroup.logicgates=Logic Gates
 
 tile.repeater_0.name=Redstone Repeater
 tile.inverter_0.name=Redstone Inverter
