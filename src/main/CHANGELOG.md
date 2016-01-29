@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - Block dropping wrong item and meta on break
+- XNOR Gate recipe
 
 ## [0.11.1] - 2016-01-28
 ### Fixed

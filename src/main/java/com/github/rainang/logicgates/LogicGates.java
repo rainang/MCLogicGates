@@ -218,7 +218,7 @@ public class LogicGates {
 		GameRegistry.addShapedRecipe(or, " B ", "BWB", 'W', wire, 'B', buffer);
 		GameRegistry.addShapedRecipe(nor, " N ", "BWB", 'W', wire, 'N', not, 'B', buffer);
 		GameRegistry.addShapedRecipe(xor, "OBO", "NWN", "WAW", 'N', not, 'W', wire, 'O', nor, 'A', and, 'B', buffer);
-		GameRegistry.addShapedRecipe(xor, "ONO", "NWN", "WAW", 'N', not, 'W', wire, 'O', nor, 'A', and);
+		GameRegistry.addShapedRecipe(xnor, "ONO", "NWN", "WAW", 'N', not, 'W', wire, 'O', nor, 'A', and);
 
 		GameRegistry.addShapelessRecipe(not, buffer, not);
 		GameRegistry.addShapelessRecipe(buffer, not, not);
