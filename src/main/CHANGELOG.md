@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Moved to Minecraft 1.8.9
+
 ### Fixed
 - Block dropping wrong item and meta on break
 - XNOR Gate recipe

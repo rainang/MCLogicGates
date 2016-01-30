@@ -14,7 +14,7 @@ public abstract class BlockDiodeConverter extends BlockDiode1In {
 	}
 
 	@Override
-	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
+	public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		return getSignal(state) == Signal.ENDER && isActive(state) && getOutput(state).getOpposite() == side ? 15 : 0;
 	}
 }

@@ -53,7 +53,7 @@ public abstract class BlockDiode extends Block {
 	public abstract PropertyInteger getInputProperty();
 
 	public EnumFacing getOutput(IBlockState state) {
-		return (EnumFacing)state.getValue(OUT);
+		return state.getValue(OUT);
 	}
 
 	public abstract EnumFacing getInput(IBlockState state, int index);
@@ -117,8 +117,9 @@ public abstract class BlockDiode extends Block {
 			return i;
 		else {
 			IBlockState offsetState = worldIn.getBlockState(offsetPos);
-			return Math.max(i, offsetState.getBlock() == Blocks.redstone_wire ? (Integer)offsetState.getValue(
-					BlockRedstoneWire.POWER)                                  : 0);
+			return Math.max(i,
+					offsetState.getBlock() == Blocks.redstone_wire                                                 ?
+					offsetState.getValue(BlockRedstoneWire.POWER) : 0);
 		}
 	}
 
@@ -205,12 +206,12 @@ public abstract class BlockDiode extends Block {
 	}
 
 	@Override
-	public int isProvidingStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
-		return isProvidingWeakPower(worldIn, pos, state, side);
+	public int getStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
+		return getWeakPower(worldIn, pos, state, side);
 	}
 
 	@Override
-	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
+	public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		return getSignal(state) == Signal.REDSTONE && isActive(state) && getOutput(state).getOpposite() == side ? 15
 																												: 0;
 	}
@@ -319,8 +320,8 @@ public abstract class BlockDiode extends Block {
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		byte b0 = 0;
-		int i = b0|((EnumFacing)state.getValue(OUT)).getHorizontalIndex();
-		i |= (Integer)state.getValue(getInputProperty())<<2;
+		int i = b0|state.getValue(OUT).getHorizontalIndex();
+		i |= state.getValue(getInputProperty())<<2;
 		return i;
 	}
 }

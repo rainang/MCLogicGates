@@ -17,6 +17,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -171,22 +172,33 @@ public class LogicGates {
 			item.getSubItems(item, null, list);
 			for(ItemStack stack : list)
 				registerItemRender(stack);
+
+			List<ItemStack> variants = new ArrayList<ItemStack>();
+			item.getSubItems(item, null, variants);
+			ResourceLocation[] resourceLocations = new ResourceLocation[variants.size()];
+			for(int i = 0; i < resourceLocations.length; i++)
+				resourceLocations[i] = getResourceLocation(variants.get(i));
+			ModelBakery.registerItemVariants(item_gate, resourceLocations);
 		} else {
-			ModelResourceLocation mrl = new ModelResourceLocation(
-					LogicGates.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory");
-			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, mrl);
+			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, getResourceLocation(item));
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	private static void registerItemRender(ItemStack stack) {
-		String name = stack.getItem().getUnlocalizedName(stack).substring(5);
-		ModelResourceLocation mrl = new ModelResourceLocation(LogicGates.MODID + ":" + name, "inventory");
 		Minecraft.getMinecraft()
 				.getRenderItem()
 				.getItemModelMesher()
-				.register(stack.getItem(), stack.getItemDamage(), mrl);
-		ModelBakery.addVariantName(stack.getItem(), LogicGates.MODID + ":" + name);
+				.register(stack.getItem(), stack.getItemDamage(), getResourceLocation(stack));
+	}
+
+	public static ModelResourceLocation getResourceLocation(Item item) {
+		return new ModelResourceLocation(LogicGates.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory");
+	}
+
+	public static ModelResourceLocation getResourceLocation(ItemStack stack) {
+		return new ModelResourceLocation(
+				LogicGates.MODID + ":" + stack.getItem().getUnlocalizedName(stack).substring(5), "inventory");
 	}
 
 	private static void registerRecipes() {

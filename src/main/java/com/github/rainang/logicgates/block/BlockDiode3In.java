@@ -45,7 +45,7 @@ public abstract class BlockDiode3In extends BlockDiode2In {
 
 	@Override
 	public int getInputState(IBlockState state) {
-		int i = (Integer)state.getValue(INPUT);
+		int i = state.getValue(INPUT);
 		return type == 0 ? i : i + 4;
 	}
 

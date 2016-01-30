@@ -49,7 +49,7 @@ public abstract class BlockDiode5In extends BlockDiode {
 
 	@Override
 	public int getInputState(IBlockState state) {
-		return (Integer)state.getValue(INPUT);
+		return state.getValue(INPUT);
 	}
 
 	@Override
@@ -103,6 +103,6 @@ public abstract class BlockDiode5In extends BlockDiode {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return (Integer)state.getValue(INPUT);
+		return state.getValue(INPUT);
 	}
 }
