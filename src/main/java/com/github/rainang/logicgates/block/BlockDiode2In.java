@@ -12,9 +12,9 @@ public abstract class BlockDiode2In extends BlockDiode {
 
 	public static final PropertyInteger INPUT = PropertyInteger.create("input", 0, 3);
 
-	private final Signal signal;
+	protected final Signal signal;
 
-	public final int type;
+	protected final int type;
 
 	public BlockDiode2In(Signal signal, Gate gate, int type) {
 		super(gate);
@@ -30,18 +30,8 @@ public abstract class BlockDiode2In extends BlockDiode {
 	}
 
 	@Override
-	public int getInputCount() {
-		return 2;
-	}
-
-	@Override
 	public PropertyInteger getInputProperty() {
 		return INPUT;
-	}
-
-	@Override
-	public int getInputState(IBlockState state) {
-		return state.getValue(INPUT);
 	}
 
 	@Override
@@ -61,5 +51,15 @@ public abstract class BlockDiode2In extends BlockDiode {
 	@Override
 	public List<EnumFacing> getInputs(IBlockState state) {
 		return Arrays.asList(getInput(state, 0), getInput(state, 1));
+	}
+
+	@Override
+	public int getInputState(IBlockState state) {
+		return state.getValue(INPUT);
+	}
+
+	@Override
+	public int getInputCount() {
+		return 2;
 	}
 }

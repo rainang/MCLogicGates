@@ -1,6 +1,5 @@
 package com.github.rainang.logicgates.block;
 
-import com.github.rainang.logicgates.diode.DiodeConnection;
 import com.github.rainang.logicgates.diode.Gate;
 import com.github.rainang.logicgates.diode.Signal;
 import java.util.List;
@@ -42,19 +41,7 @@ public abstract class BlockDiode extends Block {
 
 	public abstract Signal getSignal(IBlockState state);
 
-	public boolean isActive(IBlockState state) {
-		return gate.validate(getInputCount(), getInputState(state));
-	}
-
-	public IBlockState setInputState(IBlockState state, int input) {
-		return state.withProperty(getInputProperty(), input);
-	}
-
 	public abstract PropertyInteger getInputProperty();
-
-	public EnumFacing getOutput(IBlockState state) {
-		return state.getValue(OUT);
-	}
 
 	public abstract EnumFacing getInput(IBlockState state, int index);
 
@@ -62,7 +49,21 @@ public abstract class BlockDiode extends Block {
 
 	public abstract int getInputState(IBlockState state);
 
+	public abstract int getInputCount();
+
 	public abstract IBlockState rotate(IBlockState state);
+
+	public IBlockState setInputState(IBlockState state, int input) {
+		return state.withProperty(getInputProperty(), input);
+	}
+
+	public EnumFacing getOutput(IBlockState state) {
+		return state.getValue(OUT);
+	}
+
+	public boolean isActive(IBlockState state) {
+		return gate.validate(getInputCount(), getInputState(state));
+	}
 
 	public int getPoweredState() {
 		int state = 0;
@@ -71,42 +72,18 @@ public abstract class BlockDiode extends Block {
 		return state;
 	}
 
-	public abstract int getInputCount();
-
-	public DiodeConnection getDiodeConnectionFromSide(World world, BlockPos pos, IBlockState state, EnumFacing side) {
-		for(int i = 1; i < getSignal(state).range; i++) {
-			BlockPos offPos = pos.offset(side, i);
-			IBlockState offState = world.getBlockState(offPos);
-			if(offState.getBlock() instanceof BlockDiode) {
-				BlockDiode diode = (BlockDiode)offState.getBlock();
-				if((diode instanceof BlockDiodeConverter && diode.getSignal(offState) != getSignal(state)) ||
-						(!(diode instanceof BlockDiodeConverter) && diode.getSignal(offState) == getSignal(state)))
-					return new DiodeConnection((BlockDiode)state.getBlock(), diode, pos, offPos, state, offState, i);
-				return null;
-			}
-		}
-		return null;
-	}
-
 	public int validateInputState(World world, BlockPos pos, IBlockState state) {
 		List<EnumFacing> inputs = getInputs(state);
 		int inputState = 0;
 		for(int i = 0; i < inputs.size(); i++)
-			if(getPowerFromSide(world, pos, state, inputs.get(i)) > 0)
+			if(getPowerFromSide(world, pos, inputs.get(i), getSignal(state)) > 0)
 				inputState |= 1<<i;
 		inputState = Math.min(15, inputState);
 		return getInputState(state) == inputState ? -1 : inputState;
 	}
 
-	public int getPowerFromSide(World world, BlockPos pos, IBlockState state, EnumFacing side) {
-		int power = getDiodePowerFromSide(world, pos, state, side);
-		return getSignal(state) == Signal.REDSTONE ? Math.max(getRedstoneInput(world, pos, side), power) : power;
-	}
-
-	public int getDiodePowerFromSide(World world, BlockPos pos, IBlockState state, EnumFacing side) {
-		DiodeConnection dc = getDiodeConnectionFromSide(world, pos, state, side);
-		return dc == null || dc.connect.getOutput(dc.connectState).getOpposite() != side || !dc.hasActiveConnection()
-			   ? 0 : dc.distance;
+	public int getPowerFromSide(World world, BlockPos pos, EnumFacing side, Signal signal) {
+		return signal == Signal.REDSTONE ? getRedstoneInput(world, pos, side) : getEnderInput(world, pos, side);
 	}
 
 	public int getRedstoneInput(World worldIn, BlockPos pos, EnumFacing side) {
@@ -115,12 +92,38 @@ public abstract class BlockDiode extends Block {
 
 		if(i >= 15)
 			return i;
-		else {
-			IBlockState offsetState = worldIn.getBlockState(offsetPos);
-			return Math.max(i,
-					offsetState.getBlock() == Blocks.redstone_wire                                                 ?
-					offsetState.getValue(BlockRedstoneWire.POWER) : 0);
+
+		IBlockState sideState = worldIn.getBlockState(offsetPos);
+		return Math.max(i,
+				sideState.getBlock() == Blocks.redstone_wire ? sideState.getValue(BlockRedstoneWire.POWER) : 0);
+	}
+
+	public int getEnderInput(World world, BlockPos pos, EnumFacing side) {
+		int i = getEnderNeighborDistanceFromSide(world, pos, side);
+		if(i == 0)
+			return i;
+		IBlockState state = world.getBlockState(pos.offset(side, i));
+		BlockDiode diode = (BlockDiode)state.getBlock();
+		return diode.isActive(state) && diode.getOutput(state).getOpposite() == side ? i : 0;
+	}
+
+	public int getEnderNeighborDistanceFromSide(World world, BlockPos pos, EnumFacing side) {
+		for(int i = 1; i < Signal.ENDER.range; i++) {
+			IBlockState sideState = world.getBlockState(pos.offset(side, i));
+			if(sideState.getBlock() instanceof BlockDiode) {
+				BlockDiode diode = (BlockDiode)sideState.getBlock();
+				if(diode instanceof BlockDiodeConverter || diode.getSignal(sideState) == Signal.ENDER)
+					return i;
+			}
 		}
+		return 0;
+	}
+
+	public int[] getEnderNeighborDistances(World world, BlockPos pos) {
+		int[] distances = new int[6];
+		for(EnumFacing f : EnumFacing.values())
+			distances[f.ordinal()] = getEnderNeighborDistanceFromSide(world, pos, f);
+		return distances;
 	}
 
 	protected void updateState(World worldIn, BlockPos pos, IBlockState state) {
@@ -135,16 +138,17 @@ public abstract class BlockDiode extends Block {
 		if(getSignal(state) == Signal.REDSTONE)
 			notifyRedstoneNeighbors(worldIn, pos, state);
 		else
-			notifyEnderNeighbors(worldIn, pos, state);
+			notifyEnderNeighbors(worldIn, pos);
 	}
 
-	protected void notifyEnderNeighbors(World worldIn, BlockPos pos, IBlockState state) {
-		for(EnumFacing side : EnumFacing.values()) {
-			DiodeConnection connect = getDiodeConnectionFromSide(worldIn, pos, state, side);
-			if(connect != null) {
-				worldIn.notifyBlockOfStateChange(connect.connectPos, this);
-				worldIn.notifyNeighborsOfStateChange(connect.connectPos, this);
-			}
+	protected void notifyEnderNeighbors(World worldIn, BlockPos pos) {
+		int[] distances = getEnderNeighborDistances(worldIn, pos);
+		for(int i = 0; i < distances.length; i++) {
+			if(distances[i] == 0)
+				continue;
+			BlockPos sidePos = pos.offset(EnumFacing.values()[i], distances[i]);
+			worldIn.notifyBlockOfStateChange(sidePos, this);
+			worldIn.notifyNeighborsOfStateChange(sidePos, this);
 		}
 	}
 
@@ -157,6 +161,10 @@ public abstract class BlockDiode extends Block {
 		worldIn.notifyBlockOfStateChange(offsetPos, state.getBlock());
 		worldIn.notifyNeighborsOfStateExcept(offsetPos, state.getBlock(), out.getOpposite());
 	}
+
+	protected EnumParticleTypes getParticleType(IBlockState state) {
+		return getSignal(state) == Signal.REDSTONE ? EnumParticleTypes.REDSTONE : EnumParticleTypes.PORTAL;
+	}
 	
 	/* BLOCK OVERRIDE */
 
@@ -166,13 +174,13 @@ public abstract class BlockDiode extends Block {
 			float hitY, float hitZ) {
 		if(!playerIn.capabilities.allowEdit)
 			return false;
-		else {
-			IBlockState newState = rotate(state);
-			BlockDiode block = (BlockDiode)newState.getBlock();
-			worldIn.setBlockState(pos, newState, 3);
-			block.updateState(worldIn, pos, newState);
-			return true;
-		}
+
+		IBlockState newState = rotate(state);
+		BlockDiode block = (BlockDiode)newState.getBlock();
+		worldIn.setBlockState(pos, newState, 3);
+		block.updateState(worldIn, pos, newState);
+
+		return true;
 	}
 
 	@Override
@@ -291,8 +299,7 @@ public abstract class BlockDiode extends Block {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if(isActive(state)) {
-			EnumParticleTypes particleType = getSignal(state) == Signal.REDSTONE ? EnumParticleTypes.REDSTONE
-																				 : EnumParticleTypes.PORTAL;
+			EnumParticleTypes particleType = getParticleType(state);
 			EnumFacing enumfacing = getOutput(state);
 			double d0 = (double)((float)pos.getX() + 0.5F) + (double)(rand.nextFloat() - 0.5F)*0.2D;
 			double d1 = (double)((float)pos.getY() + 0.4F) + (double)(rand.nextFloat() - 0.5F)*0.2D;

@@ -5,13 +5,30 @@ import com.github.rainang.logicgates.diode.Signal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public abstract class BlockDiodeConverter extends BlockDiode1In {
 
 	public BlockDiodeConverter(Gate gate, int type) {
 		super(gate, type);
 	}
+
+	@Override
+	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
+		if(getSignal(state) == Signal.REDSTONE)
+			notifyEnderNeighbors(worldIn, pos);
+		else
+			notifyRedstoneNeighbors(worldIn, pos, state);
+	}
+
+	@Override
+	protected EnumParticleTypes getParticleType(IBlockState state) {
+		return getSignal(state) == Signal.REDSTONE ? EnumParticleTypes.PORTAL : EnumParticleTypes.REDSTONE;
+	}
+
+	/* BLOCK OVERRIDE */
 
 	@Override
 	public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {

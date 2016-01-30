@@ -22,31 +22,8 @@ public abstract class BlockDiode3In extends BlockDiode2In {
 	}
 
 	@Override
-	public IBlockState rotate(IBlockState state) {
-		return state;
-	}
-
-	@Override
-	public boolean onBlockActivated(
-			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
-			float hitY, float hitZ) {
-		return false;
-	}
-
-	@Override
-	public int getInputCount() {
-		return 3;
-	}
-
-	@Override
 	public PropertyInteger getInputProperty() {
 		return INPUT;
-	}
-
-	@Override
-	public int getInputState(IBlockState state) {
-		int i = state.getValue(INPUT);
-		return type == 0 ? i : i + 4;
 	}
 
 	@Override
@@ -61,5 +38,30 @@ public abstract class BlockDiode3In extends BlockDiode2In {
 	}
 
 	@Override
+	public int getInputState(IBlockState state) {
+		int i = state.getValue(INPUT);
+		return type == 0 ? i : i + 4;
+	}
+
+	@Override
+	public int getInputCount() {
+		return 3;
+	}
+
+	@Override
+	public IBlockState rotate(IBlockState state) {
+		return state;
+	}
+
+	@Override
 	public abstract IBlockState setInputState(IBlockState state, int input);
+
+	/* BLOCK OVERRIDE */
+
+	@Override
+	public boolean onBlockActivated(
+			World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX,
+			float hitY, float hitZ) {
+		return false;
+	}
 }
