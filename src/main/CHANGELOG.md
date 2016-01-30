@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Moved to Minecraft 1.8.9
+- BUFFER and NOT gate recipes to reduce overall slab cost
 
 ### Fixed
 - Block dropping wrong item and meta on break
