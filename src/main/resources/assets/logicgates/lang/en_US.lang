@@ -4,6 +4,9 @@ tile.repeater_0.name=Redstone Repeater
 tile.inverter_0.name=Redstone Inverter
 tile.converter_0.name=Redstone Converter
 
+tile.diode5in_0.name=Redstone Vertical Transmitter
+tile.vertical_receiver.name=Redstone Vertical Receiver
+
 tile.diode2in_and_0.name=Redstone 2-Input AND Gate
 tile.diode2in_or_0.name=Redstone 2-Input OR Gate
 tile.diode2in_xor_0.name=Redstone 2-Input XOR Gate
@@ -18,12 +21,12 @@ tile.diode3in_nand_0.name=Redstone 3-Input NAND Gate
 tile.diode3in_nor_0.name=Redstone 3-Input NOR Gate
 tile.diode3in_xnor_0.name=Redstone 3-Input XNOR Gate
 
-tile.diode5in_0.name=Redstone Vertical Repeater
-tile.diode5in_1.name=Redstone Vertical Repeater
-
 tile.ender_repeater_0.name=Ender Repeater
 tile.ender_inverter_0.name=Ender Inverter
 tile.ender_converter_0.name=Ender Converter
+
+tile.ender_diode5in_0.name=Ender Vertical Transmitter
+tile.ender_vertical_receiver.name=Ender Vertical Receiver
 
 tile.ender_diode2in_and_0.name=Ender 2-Input AND Gate
 tile.ender_diode2in_or_0.name=Ender 2-Input OR Gate
@@ -38,9 +41,6 @@ tile.ender_diode3in_xor_0.name=Ender 3-Input XOR Gate
 tile.ender_diode3in_nand_0.name=Ender 3-Input NAND Gate
 tile.ender_diode3in_nor_0.name=Ender 3-Input NOR Gate
 tile.ender_diode3in_xnor_0.name=Ender 3-Input XNOR Gate
-
-tile.ender_diode5in_0.name=Ender Vertical Repeater
-tile.ender_diode5in_1.name=Ender Vertical Repeater
 
 item.gate_buffer.name=BUFFER Gate
 item.gate_not.name=NOT Gate

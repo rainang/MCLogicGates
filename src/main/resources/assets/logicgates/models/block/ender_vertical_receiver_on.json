@@ -1,0 +1,8 @@
+{
+  "parent": "logicgates:block/base/diode",
+  "textures": {
+	"center": "logicgates:blocks/gate_base",
+	"signal_center": "logicgates:blocks/ender_on",
+	"out": "logicgates:blocks/ender_torch_on"
+  }
+}

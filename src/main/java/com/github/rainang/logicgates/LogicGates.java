@@ -36,7 +36,7 @@ public class LogicGates {
 	public static final CreativeTabs TAB_GATES = new CreativeTabs("logicgates") {
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(gates3_and[0]);
+			return item_gate;
 		}
 	};
 
@@ -58,7 +58,8 @@ public class LogicGates {
 	public static final BlockDiode[] gates3_nor  = DiodeFactory.create3InputDiode("nor", Gate.NOR);
 	public static final BlockDiode[] gates3_xnor = DiodeFactory.create3InputDiode("xnor", Gate.XNOR);
 
-	public static final BlockDiode[] verticals = DiodeFactory.create5InputDiode();
+	public static final BlockDiode[] vertical_transmitters = DiodeFactory.createVerticalTransmitters();
+	public static final BlockDiode[] vertical_receivers    = DiodeFactory.createVerticalReceivers();
 
 	public static final ItemGate item_gate = new ItemGate();
 
@@ -99,7 +100,9 @@ public class LogicGates {
 		for(BlockDiode diode : gates3_xnor)
 			registerBlock(diode);
 
-		for(BlockDiode diode : verticals)
+		for(BlockDiode diode : vertical_transmitters)
+			registerBlock(diode);
+		for(BlockDiode diode : vertical_receivers)
 			registerBlock(diode);
 	}
 
@@ -145,7 +148,9 @@ public class LogicGates {
 		for(BlockDiode diode : gates3_xnor)
 			registerItemRender(diode);
 
-		for(BlockDiode diode : verticals)
+		for(BlockDiode diode : vertical_transmitters)
+			registerItemRender(diode);
+		for(BlockDiode diode : vertical_receivers)
 			registerItemRender(diode);
 	}
 
@@ -209,7 +214,8 @@ public class LogicGates {
 
 		ItemStack torch = new ItemStack(Blocks.redstone_torch);
 		ItemStack invert = new ItemStack(inverters[0]);
-		ItemStack vertical = new ItemStack(verticals[0]);
+		ItemStack transmitter = new ItemStack(vertical_transmitters[0]);
+		ItemStack receiver = new ItemStack(vertical_receivers[0]);
 		ItemStack repeat = new ItemStack(repeaters[0]);
 
 		ItemStack buffer = new ItemStack(item_gate, 1, 0);
@@ -245,7 +251,8 @@ public class LogicGates {
 
 		GameRegistry.addShapedRecipe(repeat, "SGS", "SWS", "SWS", 'G', buffer, 'S', slab, 'W', wire);
 		GameRegistry.addShapedRecipe(invert, "SGS", "SWS", "SWS", 'G', not, 'S', slab, 'W', wire);
-		GameRegistry.addShapedRecipe(vertical, "SWS", "WGW", "SWS", 'G', buffer, 'S', slab, 'W', wire);
+		GameRegistry.addShapedRecipe(transmitter, "SWS", "WGW", "SWS", 'G', buffer, 'S', slab, 'W', wire);
+		GameRegistry.addShapedRecipe(receiver, "SGS", "SWS", "SSS", 'G', buffer, 'S', slab, 'W', wire);
 
 		GameRegistry.addShapedRecipe(new ItemStack(gates_and[0]), "SBS", "WGW", "SSS", 'S', slab, 'W', wire, 'B',
 				buffer, 'G', and);
@@ -278,7 +285,8 @@ public class LogicGates {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(repeaters[0], 1, 8), repeat, p);
 		GameRegistry.addShapelessRecipe(new ItemStack(inverters[0], 1, 8), invert, p);
-		GameRegistry.addShapelessRecipe(new ItemStack(verticals[0], 1, 8), vertical, p);
+		GameRegistry.addShapelessRecipe(new ItemStack(vertical_transmitters[0], 1, 8), transmitter, p);
+		GameRegistry.addShapelessRecipe(new ItemStack(vertical_receivers[0], 1, 8), receiver, p);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(gates_and[4]), gates_and[0], p);
 		GameRegistry.addShapelessRecipe(new ItemStack(gates_or[4]), gates_or[0], p);

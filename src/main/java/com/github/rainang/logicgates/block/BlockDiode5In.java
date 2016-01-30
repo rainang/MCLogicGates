@@ -77,10 +77,6 @@ public abstract class BlockDiode5In extends BlockDiode {
 		}
 	}
 
-	public int validateInputState(World world, BlockPos pos, IBlockState state) {
-		return super.validateInputState(world, pos, state);
-	}
-
 	@Override
 	public List<EnumFacing> getInputs(IBlockState state) {
 		return Arrays.asList(getInput(state, 0), getInput(state, 1), getInput(state, 2), getInput(state, 3),

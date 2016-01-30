@@ -3,6 +3,10 @@ package com.github.rainang.logicgates.diode;
 import com.github.rainang.logicgates.LogicGates;
 import com.github.rainang.logicgates.block.*;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class DiodeFactory {
 
@@ -127,7 +131,7 @@ public class DiodeFactory {
 		return diodes;
 	}
 
-	public static BlockDiode[] create5InputDiode() {
+	public static BlockDiode[] createVerticalTransmitters() {
 		final BlockDiode[] diodes = new BlockDiode[4];
 		for(final Signal signal : Signal.values())
 			for(int i = 0; i < 2; i++) {
@@ -160,6 +164,42 @@ public class DiodeFactory {
 				if(i == 0)
 					diodes[j].setCreativeTab(LogicGates.TAB_GATES);
 			}
+		return diodes;
+	}
+
+	public static BlockDiode[] createVerticalReceivers() {
+
+		final BlockDiode[] diodes = new BlockDiode[2];
+		for(final Signal signal : Signal.values()) {
+			diodes[signal.ordinal()] = new BlockDiode2In(signal, Gate.OR, 0) {
+				@Override
+				public BlockDiode getBaseBlock() {
+					return diodes[signal.ordinal()*3];
+				}
+
+				@Override
+				public EnumFacing getInput(IBlockState state, int index) {
+					return EnumFacing.values()[index];
+				}
+
+				@Override
+				public IBlockState rotate(IBlockState state) {
+					return diodes[signal.ordinal()].getDefaultState()
+							.withProperty(OUT, state.getValue(OUT))
+							.withProperty(INPUT, state.getValue(INPUT));
+				}
+
+				@Override
+				public boolean onBlockActivated(
+						World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side,
+						float hitX, float hitY, float hitZ) {
+					return false;
+				}
+			};
+			diodes[signal.ordinal()].setUnlocalizedName(
+					(signal == Signal.ENDER ? signal.getName() + "_" : "") + "vertical_receiver");
+			diodes[signal.ordinal()].setCreativeTab(LogicGates.TAB_GATES);
+		}
 		return diodes;
 	}
 }

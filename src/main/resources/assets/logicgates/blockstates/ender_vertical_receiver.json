@@ -1,0 +1,20 @@
+{
+  "variants": {
+	"input=0,out=north": { "model": "logicgates:ender_vertical_receiver" },
+	"input=0,out=east": { "model": "logicgates:ender_vertical_receiver", "y": 90 },
+	"input=0,out=south": { "model": "logicgates:ender_vertical_receiver", "y": 180 },
+	"input=0,out=west": { "model": "logicgates:ender_vertical_receiver", "y": 270 },
+	"input=1,out=north": { "model": "logicgates:ender_vertical_receiver_on" },
+	"input=1,out=east": { "model": "logicgates:ender_vertical_receiver_on", "y": 90 },
+	"input=1,out=south": { "model": "logicgates:ender_vertical_receiver_on", "y": 180 },
+	"input=1,out=west": { "model": "logicgates:ender_vertical_receiver_on", "y": 270 },
+	"input=2,out=north": { "model": "logicgates:ender_vertical_receiver_on" },
+	"input=2,out=east": { "model": "logicgates:ender_vertical_receiver_on", "y": 90 },
+	"input=2,out=south": { "model": "logicgates:ender_vertical_receiver_on", "y": 180 },
+	"input=2,out=west": { "model": "logicgates:ender_vertical_receiver_on", "y": 270 },
+	"input=3,out=north": { "model": "logicgates:ender_vertical_receiver_on" },
+	"input=3,out=east": { "model": "logicgates:ender_vertical_receiver_on", "y": 90 },
+	"input=3,out=south": { "model": "logicgates:ender_vertical_receiver_on", "y": 180 },
+	"input=3,out=west": { "model": "logicgates:ender_vertical_receiver_on", "y": 270 }
+  }
+}

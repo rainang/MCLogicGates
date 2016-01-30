@@ -139,12 +139,11 @@ public abstract class BlockDiode extends Block {
 	}
 
 	protected void notifyEnderNeighbors(World worldIn, BlockPos pos, IBlockState state) {
-		for(EnumFacing side : EnumFacing.VALUES) {
+		for(EnumFacing side : EnumFacing.values()) {
 			DiodeConnection connect = getDiodeConnectionFromSide(worldIn, pos, state, side);
 			if(connect != null) {
 				worldIn.notifyBlockOfStateChange(connect.connectPos, this);
-				worldIn.notifyNeighborsOfStateExcept(connect.connectPos, this, side);
-				break;
+				worldIn.notifyNeighborsOfStateChange(connect.connectPos, this);
 			}
 		}
 	}

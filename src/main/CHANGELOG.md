@@ -3,9 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.0.0] - 2016-01-30
+### Added
+- Vertical Receiver Blocks
+
 ### Changed
 - Moved to Minecraft 1.8.9
 - BUFFER and NOT gate recipes to reduce overall slab cost
+- Renamed Vertical Repeater to Vertical Transmitter
+- Recipes for Vertical Transmitter
 
 ### Fixed
 - Block dropping wrong item and meta on break
