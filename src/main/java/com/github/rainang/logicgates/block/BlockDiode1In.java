@@ -1,7 +1,7 @@
 package com.github.rainang.logicgates.block;
 
-import com.github.rainang.logicgates.diode.Gate;
-import com.github.rainang.logicgates.diode.Signal;
+import com.github.rainang.logicgates.Gate;
+import com.github.rainang.logicgates.Signal;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.block.properties.PropertyEnum;

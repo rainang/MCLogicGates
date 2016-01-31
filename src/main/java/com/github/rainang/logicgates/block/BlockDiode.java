@@ -1,7 +1,7 @@
 package com.github.rainang.logicgates.block;
 
-import com.github.rainang.logicgates.diode.Gate;
-import com.github.rainang.logicgates.diode.Signal;
+import com.github.rainang.logicgates.Gate;
+import com.github.rainang.logicgates.Signal;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.block.Block;
@@ -87,15 +87,15 @@ public abstract class BlockDiode extends Block {
 	}
 
 	public int getRedstoneInput(World worldIn, BlockPos pos, EnumFacing side) {
-		BlockPos offsetPos = pos.offset(side);
-		int i = worldIn.getRedstonePower(offsetPos, side);
+		BlockPos sidePos = pos.offset(side);
+		int i = worldIn.getRedstonePower(sidePos, side);
 
 		if(i >= 15)
 			return i;
 
-		IBlockState sideState = worldIn.getBlockState(offsetPos);
-		return Math.max(i,
-				sideState.getBlock() == Blocks.redstone_wire ? sideState.getValue(BlockRedstoneWire.POWER) : 0);
+		IBlockState sideState = worldIn.getBlockState(sidePos);
+		int wire = sideState.getBlock() == Blocks.redstone_wire ? sideState.getValue(BlockRedstoneWire.POWER) : 0;
+		return Math.max(i, wire);
 	}
 
 	public int getEnderInput(World world, BlockPos pos, EnumFacing side) {
@@ -156,12 +156,12 @@ public abstract class BlockDiode extends Block {
 
 	protected void notifyRedstoneNeighbors(World worldIn, BlockPos pos, IBlockState state) {
 		EnumFacing out = getOutput(state);
-		BlockPos offsetPos = pos.offset(out);
+		BlockPos sidePos = pos.offset(out);
 		if(net.minecraftforge.event.ForgeEventFactory.onNeighborNotify(worldIn, pos, worldIn.getBlockState(pos),
 				java.util.EnumSet.of(out)).isCanceled())
 			return;
-		worldIn.notifyBlockOfStateChange(offsetPos, state.getBlock());
-		worldIn.notifyNeighborsOfStateExcept(offsetPos, state.getBlock(), out.getOpposite());
+		worldIn.notifyBlockOfStateChange(sidePos, state.getBlock());
+		worldIn.notifyNeighborsOfStateExcept(sidePos, state.getBlock(), out.getOpposite());
 	}
 
 	protected EnumParticleTypes getParticleType(IBlockState state) {

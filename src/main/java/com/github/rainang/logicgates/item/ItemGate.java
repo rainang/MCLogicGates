@@ -1,7 +1,7 @@
 package com.github.rainang.logicgates.item;
 
+import com.github.rainang.logicgates.Gate;
 import com.github.rainang.logicgates.LogicGates;
-import com.github.rainang.logicgates.diode.Gate;
 import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,6 +18,7 @@ public class ItemGate extends Item {
 		setCreativeTab(LogicGates.TAB_GATES);
 	}
 
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		int i = stack.getMetadata();
 		return super.getUnlocalizedName() + "_" + Gate.values()[i].getName();

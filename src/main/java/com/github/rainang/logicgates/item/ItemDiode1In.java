@@ -12,10 +12,12 @@ public class ItemDiode1In extends ItemBlock {
 		setHasSubtypes(true);
 	}
 
+	@Override
 	public int getMetadata(int damage) {
 		return damage;
 	}
 
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		int i = stack.getMetadata();
 		return "tile." + (i < 8 ? "" : "ender_") + super.getUnlocalizedName().substring(5);

@@ -1,7 +1,7 @@
 package com.github.rainang.logicgates.block;
 
-import com.github.rainang.logicgates.diode.Gate;
-import com.github.rainang.logicgates.diode.Signal;
+import com.github.rainang.logicgates.Gate;
+import com.github.rainang.logicgates.Signal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;

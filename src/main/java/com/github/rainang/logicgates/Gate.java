@@ -1,4 +1,4 @@
-package com.github.rainang.logicgates.diode;
+package com.github.rainang.logicgates;
 
 import java.util.function.Predicate;
 import net.minecraft.util.IStringSerializable;

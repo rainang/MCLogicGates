@@ -2,8 +2,6 @@ package com.github.rainang.logicgates;
 
 import com.github.rainang.logicgates.block.BlockDiode;
 import com.github.rainang.logicgates.common.CommonProxy;
-import com.github.rainang.logicgates.diode.DiodeFactory;
-import com.github.rainang.logicgates.diode.Gate;
 import com.github.rainang.logicgates.item.ItemGate;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -16,15 +14,15 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = LogicGates.MODID, version = LogicGates.VERSION, acceptedMinecraftVersions = LogicGates.MCVERSION)
 public class LogicGates {
 
-	@SidedProxy(clientSide = "com.github.rainang.logicgates.client.ClientProxy",
-				serverSide = "com.github.rainang.logicgates.common.CommonProxy")
-	public static CommonProxy proxy;
-
 	public static final String MODID     = "logicgates";
 	public static final String MCVERSION = "@mcversion@";
 	public static final String VERSION   = "@version@";
 
-	public static final CreativeTabs TAB_GATES = new CreativeTabs("logicgates") {
+	@SidedProxy(clientSide = "com.github.rainang.logicgates.client.ClientProxy",
+				serverSide = "com.github.rainang.logicgates.common.CommonProxy")
+	public static CommonProxy proxy;
+
+	public static final CreativeTabs TAB_GATES = new CreativeTabs(MODID) {
 		@Override
 		public Item getTabIconItem() {
 			return item_gate;

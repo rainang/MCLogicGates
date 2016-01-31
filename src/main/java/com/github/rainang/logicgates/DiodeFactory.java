@@ -1,6 +1,5 @@
-package com.github.rainang.logicgates.diode;
+package com.github.rainang.logicgates;
 
-import com.github.rainang.logicgates.LogicGates;
 import com.github.rainang.logicgates.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,31 +28,6 @@ public class DiodeFactory {
 				}
 			};
 			diodes[i].setUnlocalizedName(name + "_" + i);
-			if(i == 0)
-				diodes[i].setCreativeTab(LogicGates.TAB_GATES);
-		}
-		return diodes;
-	}
-
-	public static BlockDiode[] createConverterDiode() {
-		final BlockDiode[] diodes = new BlockDiode[3];
-		for(int i = 0; i < 3; i++) {
-			final int j = (i + 1)%3;
-			diodes[i] = new BlockDiodeConverter(Gate.BUFFER, i) {
-				@Override
-				public BlockDiode getBaseBlock() {
-					return diodes[0];
-				}
-
-				@Override
-				public IBlockState rotate(IBlockState state) {
-					return diodes[j].getDefaultState()
-							.withProperty(OUT, state.getValue(OUT))
-							.withProperty(INPUT, state.getValue(INPUT))
-							.withProperty(SIGNAL, state.getValue(SIGNAL));
-				}
-			};
-			diodes[i].setUnlocalizedName("converter_" + i);
 			if(i == 0)
 				diodes[i].setCreativeTab(LogicGates.TAB_GATES);
 		}
@@ -128,6 +102,31 @@ public class DiodeFactory {
 				if(i == 0)
 					diodes[j].setCreativeTab(LogicGates.TAB_GATES);
 			}
+		return diodes;
+	}
+
+	public static BlockDiode[] createConverterDiode() {
+		final BlockDiode[] diodes = new BlockDiode[3];
+		for(int i = 0; i < 3; i++) {
+			final int j = (i + 1)%3;
+			diodes[i] = new BlockDiodeConverter(Gate.BUFFER, i) {
+				@Override
+				public BlockDiode getBaseBlock() {
+					return diodes[0];
+				}
+
+				@Override
+				public IBlockState rotate(IBlockState state) {
+					return diodes[j].getDefaultState()
+							.withProperty(OUT, state.getValue(OUT))
+							.withProperty(INPUT, state.getValue(INPUT))
+							.withProperty(SIGNAL, state.getValue(SIGNAL));
+				}
+			};
+			diodes[i].setUnlocalizedName("converter_" + i);
+			if(i == 0)
+				diodes[i].setCreativeTab(LogicGates.TAB_GATES);
+		}
 		return diodes;
 	}
 
