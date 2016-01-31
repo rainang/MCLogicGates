@@ -104,6 +104,8 @@ public abstract class BlockDiode extends Block {
 			return i;
 		IBlockState state = world.getBlockState(pos.offset(side, i));
 		BlockDiode diode = (BlockDiode)state.getBlock();
+		if(diode instanceof BlockDiodeConverter && diode.getSignal(state) == Signal.ENDER)
+			return 0;
 		return diode.isActive(state) && diode.getOutput(state).getOpposite() == side ? i : 0;
 	}
 
@@ -256,7 +258,8 @@ public abstract class BlockDiode extends Block {
 
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		notifyNeighbors(worldIn, pos, state);
+		notifyEnderNeighbors(worldIn, pos);
+		notifyRedstoneNeighbors(worldIn, pos, state);
 	}
 
 	@Override

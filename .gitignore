@@ -1,9 +1,8 @@
 .git
 .gradle
 .idea
-
 build
-logs
+eclipse
 run
 *.gradle
 *.iml

@@ -17,9 +17,8 @@ public abstract class BlockDiodeConverter extends BlockDiode1In {
 
 	@Override
 	protected void notifyNeighbors(World worldIn, BlockPos pos, IBlockState state) {
+		notifyEnderNeighbors(worldIn, pos);
 		if(getSignal(state) == Signal.REDSTONE)
-			notifyEnderNeighbors(worldIn, pos);
-		else
 			notifyRedstoneNeighbors(worldIn, pos, state);
 	}
 
